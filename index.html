@@ -256,8 +256,16 @@
 
     <script>
       const sampleRecord = { licence: "UP671092871201", name: "Bhupinder Kumar", father: "Puran Chand", dateOfBirth: "28 September 1998", firstIssue: "15 April 2019", issueRenewal: "15 April 2019", category: "LMV / MCWG", expiry: "14 April 2028" };
-      const secondSampleRecord = { licence: "UP9081726354", name: "Aamir Shah", father: "Naeem Shah", dateOfBirth: "12 June 1994", firstIssue: "20 August 2020", issueRenewal: "20 August 2025", category: "LMV / MCWG", expiry: "19 August 2030" };
-      const records = { "UP671092871201": sampleRecord, "UP9081726354": secondSampleRecord };
+
+const secondSampleRecord = { licence: "UP9081726354", name: "Aamir Shah", father: "Naeem Shah", dateOfBirth: "12 June 1994", firstIssue: "20 August 2020", issueRenewal: "20 August 2025", category: "LMV / MCWG", expiry: "19 August 2030" };
+
+const thirdRecord = { licence: "UP1831831833", name: "Arshad", father: "Gul Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
+
+const records = {
+  "UP671092871201": sampleRecord,
+  "UP9081726354": secondSampleRecord,
+  "UP1831831833": thirdRecord
+};
 
       const form = document.querySelector("#search-form");
       const input = document.querySelector("#licence-input");
