@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A responsive online driving licence verification interface." />
+    <meta name="theme-color" content="#083a78" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23083a78'/%3E%3Cpath d='M18 17h28v30H18z' fill='white'/%3E%3Cpath d='m24 32 5 5 11-12' fill='none' stroke='%23e5303f' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <title>Online Licence Verification</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --navy: #07366e;
+        --navy-deep: #052b59;
+        --blue: #0d65bd;
+        --red: #df2638;
+        --red-dark: #bd1528;
+        --ink: #172132;
+        --muted: #637083;
+        --line: #dce4ee;
+        --surface: #ffffff;
+        --wash: #f3f7fb;
+        --shadow: 0 22px 64px rgba(4, 38, 78, 0.14);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #d0e4da url("/green-texture.webp") center / cover no-repeat;
+      }
+
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+
+      .topbar {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 20;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 clamp(20px, 5vw, 72px);
+        color: white;
+        background: rgba(5, 43, 89, 0.96);
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        backdrop-filter: blur(14px);
+      }
+
+      .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -0.02em; }
+      .brand-mark {
+        width: 40px; height: 40px; display: grid; place-items: center;
+        border-radius: 11px; background: white; color: var(--navy); box-shadow: 0 8px 20px rgba(0,0,0,.15);
+      }
+      .brand-mark svg { width: 23px; height: 23px; }
+      .nav-links { display: flex; align-items: center; gap: 28px; font-size: 0.9rem; font-weight: 650; }
+      .nav-links a { color: inherit; text-decoration: none; opacity: .84; }
+      .nav-links a:hover { opacity: 1; }
+
+      main { min-height: 100vh; display: grid; place-items: center; padding: 118px 20px 54px; }
+      .shell { width: min(100%, 980px); }
+      .hero { text-align: center; margin-bottom: 30px; }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        color: var(--blue); font-size: .78rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase;
+      }
+      .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--red); }
+      h1 { margin: 12px auto 12px; max-width: 760px; color: var(--navy); font-size: clamp(2.25rem, 6vw, 4.75rem); line-height: .98; letter-spacing: -.055em; }
+      .hero p { max-width: 590px; margin: 0 auto; color: var(--muted); font-size: 1.02rem; line-height: 1.7; }
+
+      .panel {
+        position: relative;
+        padding: clamp(22px, 4vw, 42px);
+        border: 1px solid rgba(216, 227, 239, .9);
+        border-radius: 24px;
+        background: rgba(255,255,255,.92);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .panel::after {
+        content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+        background: linear-gradient(90deg, var(--navy), var(--blue) 68%, var(--red) 68%);
+      }
+      .panel-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+      .panel-head h2 { margin: 0 0 5px; color: var(--navy-deep); font-size: 1.25rem; letter-spacing: -.02em; }
+      .panel-head p { margin: 0; color: var(--muted); font-size: .9rem; }
+      .secure { display: flex; align-items: center; gap: 7px; color: #267143; font-size: .8rem; font-weight: 700; white-space: nowrap; }
+      .secure svg { width: 16px; height: 16px; }
+
+      .search { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+      .input-wrap { position: relative; }
+      .input-wrap svg { position: absolute; left: 17px; top: 50%; width: 20px; transform: translateY(-50%); color: #8592a4; }
+      input {
+        width: 100%; min-height: 58px; padding: 0 18px 0 48px;
+        border: 1px solid #cdd8e5; border-radius: 12px; outline: none;
+        color: var(--ink); background: #fbfdff; font-size: 1rem;
+        transition: border-color .2s, box-shadow .2s, background .2s;
+      }
+      input:focus { border-color: var(--blue); background: white; box-shadow: 0 0 0 4px rgba(13, 101, 189, .11); }
+      .search-btn {
+        min-height: 58px; min-width: 142px; display: flex; align-items: center; justify-content: center; gap: 9px;
+        border: 0; border-radius: 12px; color: white; background: var(--red); font-weight: 800;
+        box-shadow: 0 10px 24px rgba(223, 38, 56, .22); transition: transform .18s, background .18s;
+      }
+      .search-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+      .search-btn:active { transform: translateY(0); }
+      .search-btn svg { width: 19px; }
+      .samples { margin: 13px 2px 0; color: var(--muted); font-size: .82rem; }
+      .samples button { border: 0; padding: 0; color: var(--blue); background: transparent; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
+
+      .message { display: none; margin-top: 22px; padding: 15px 17px; border-radius: 12px; line-height: 1.45; }
+      .message.show { display: block; }
+      .message.error { color: #8f1e29; background: #fff0f2; border: 1px solid #ffcbd0; }
+
+      .result { display: none; margin-top: 26px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: white; }
+      .result.show { display: block; animation: reveal .35s ease-out both; }
+      @keyframes reveal { from { opacity: 0; transform: translateY(8px); } }
+      .result-head {
+        display: flex; align-items: center; justify-content: space-between; gap: 20px;
+        padding: 18px 22px; color: white; background: linear-gradient(105deg, var(--navy-deep), var(--navy));
+      }
+      .result-head strong { display: block; font-size: 1rem; }
+      .result-head span { display: block; margin-top: 2px; font-size: .82rem; opacity: .72; }
+      .status { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; color: #075529; background: #dff8e9; font-size: .82rem; font-weight: 800; }
+      .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #18a957; box-shadow: 0 0 0 4px rgba(24,169,87,.13); }
+      .details { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .detail { min-height: 92px; padding: 20px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .detail:nth-child(3n) { border-right: 0; }
+      .detail:nth-last-child(-n+3) { border-bottom: 0; }
+      .detail label { display: block; margin-bottom: 6px; color: var(--muted); font-size: .74rem; font-weight: 750; letter-spacing: .065em; text-transform: uppercase; }
+      .detail strong { color: var(--ink); font-size: .94rem; line-height: 1.4; }
+
+      .notice { display: flex; align-items: flex-start; gap: 12px; max-width: 760px; margin: 22px auto 0; color: #667488; font-size: .78rem; line-height: 1.55; }
+      .notice svg { flex: 0 0 auto; width: 18px; margin-top: 1px; color: var(--blue); }
+      footer { padding: 0 20px 28px; color: #7a8797; text-align: center; font-size: .76rem; }
+
+      @media (max-width: 720px) {
+        .topbar { height: 64px; padding-inline: 18px; }
+        .brand span:last-child, .nav-links a { display: none; }
+        main { padding-top: 100px; }
+        .panel-head { align-items: flex-start; flex-direction: column; }
+        .search { grid-template-columns: 1fr; }
+        .search-btn { width: 100%; }
+        .details { grid-template-columns: repeat(2, 1fr); }
+        .detail:nth-child(3n) { border-right: 1px solid var(--line); }
+        .detail:nth-child(2n) { border-right: 0; }
+        .detail:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
+        .detail:nth-last-child(-n+2) { border-bottom: 0; }
+      }
+
+      @media (max-width: 460px) {
+        h1 { font-size: 2.55rem; }
+        .panel { padding: 22px 17px; border-radius: 18px; }
+        .details { grid-template-columns: 1fr; }
+        .detail, .detail:nth-child(2n), .detail:nth-child(3n) { border-right: 0; border-bottom: 1px solid var(--line); }
+        .detail:last-child { border-bottom: 0; }
+        .result-head { align-items: flex-start; flex-direction: column; }
+      }
+      .result .detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; min-height: 64px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .result .detail:last-child { border-bottom: 0; }
+      .result .detail label { margin: 0; font-size: .875rem; letter-spacing: 0; text-transform: none; }
+      .result .detail strong { overflow-wrap: anywhere; }
+      .result-banner { display: none; }
+      body.results-view .topbar, body.results-view .hero, body.results-view .panel-head, body.results-view .samples, body.results-view .notice, body.results-view > figure, body.results-view > footer { display: none; }
+      body.results-view main { display: block; padding: 10px 15px 24px; }
+      body.results-view .shell { max-width: 660px; margin: auto; }
+      body.results-view .panel { padding: 0; background: transparent; box-shadow: none; border: 0; border-radius: 0; overflow: visible; }
+      body.results-view .panel::after { display: none; }
+      body.results-view .result-banner { display: block; width: 100%; height: auto; margin-bottom: 20px; }
+      body.results-view .search { grid-template-columns: minmax(0, 1fr) 72px; gap: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 7px 12px #0002; }
+      body.results-view .input-wrap svg { display: none; }
+      body.results-view input { min-height: 54px; padding: 0 16px; border: 0; border-radius: 0; background: white; }
+      body.results-view .search-btn { min-width: 0; min-height: 54px; border-radius: 0; background: #e60012; font-size: 0; gap: 0; }
+      body.results-view .search-btn svg { width: 26px; }
+      body.results-view .result { margin-top: 24px; border-radius: 12px; box-shadow: 0 6px 12px #0002; animation: none; }
+      body.results-view .result-head { display: block; padding: 16px; background: #e5e7eb; color: #111; text-align: center; border-bottom: 1px solid #d1d5db; }
+      body.results-view .result .detail { display: block; padding: 0; min-height: 0; border-bottom: 1px solid #111; background: #fff; }
+      body.results-view .result .detail:nth-child(odd) { background: #f3f4f6; }
+      body.results-view .result .detail:last-child { border-bottom: 0; }
+      body.results-view .result .detail label, body.results-view .result .detail strong { display: block; padding: 14px 16px; color: #111; font-size: 1rem; font-weight: 400; line-height: 1.5; }
+      body.results-view .result .detail label { border-bottom: 1px solid #d1d5db; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand" aria-label="Online Licence Verification">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v14H5V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/><path d="m8 12 2.5 2.5L16 9" stroke="#df2638" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Online Verification</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#verify">Verify licence</a>
+      </nav>
+    </header>
+
+    <main id="verify">
+      <div class="shell">
+        <section class="hero" aria-labelledby="page-title">
+          <div class="eyebrow">Digital verification service</div>
+          <h1 id="page-title">Verify a driving licence online</h1>
+          <p>Enter a licence or CNIC number to check the record and validity details in seconds.</p>
+        </section>
+
+        <section class="panel" aria-labelledby="search-title">
+          <div class="panel-head">
+            <div>
+              <h2 id="search-title">Licence record search</h2>
+              <p>Enter the number without spaces or dashes.</p>
+            </div>
+            <div class="secure">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3m-11 0h12a2 2 0 0 1 2 2v7H4v-7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/></svg>
+              Secure lookup
+            </div>
+          </div>
+
+          <img class="result-banner" src="/result-banner.jpeg" width="720" height="298" alt="Traffic police — लाइसेंस सत्यापन (Licence verification)" />
+          <form class="search" id="search-form">
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <input id="licence-input" name="licence" inputmode="text" autocomplete="off" aria-label="Licence or CNIC number" placeholder="Licence / CNIC number" />
+            </div>
+            <button class="search-btn" type="submit" aria-label="Search licence">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Verify now
+            </button>
+          </form>
+          <div class="message error" id="error-message" role="alert"></div>
+
+          <article class="result" id="result-card" aria-live="polite">
+            <div class="result-head">
+              <strong>License Number: <b id="licence-number"></b></strong>
+            </div>
+            <div class="details" style="grid-template-columns: 1fr;">
+              <div class="detail"><label>Full name</label><strong id="full-name"></strong></div>
+              <div class="detail"><label>Father name</label><strong id="father-name"></strong></div>
+              <div class="detail"><label>Date of Birth</label><strong id="date-of-birth"></strong></div>
+              <div class="detail"><label>First Issue</label><strong id="first-issue"></strong></div>
+              <div class="detail"><label>Issue / Renewal</label><strong id="issue-renewal"></strong></div>
+              <div class="detail"><label>Validity</label><strong id="valid-until"></strong></div>
+              <div class="detail"><label>Category</label><strong id="category"></strong></div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+    <figure style="width: min(100%, 720px); aspect-ratio: 720 / 940; overflow: hidden; margin: 0 auto 32px;">
+      <img src="/service-features.jpeg" width="720" height="1019" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto;" alt="Secure, Fast, Reliable. Digital Security, 24/7 Available, Global Access." />
+    </figure>
+    <footer>Online Licence Verification · Fast, accessible lookups</footer>
+
+    <script>
+      const sampleRecord = { licence: "UP671092871201", name: "Bhupinder Kumar", father: "Puran Chand", dateOfBirth: "28 September 1998", firstIssue: "15 April 2019", issueRenewal: "15 April 2019", category: "LMV / MCWG", expiry: "14 April 2028" };
+      const secondSampleRecord = { licence: "UP9081726354", name: "Aamir Shah", father: "Naeem Shah", dateOfBirth: "12 June 1994", firstIssue: "20 August 2020", issueRenewal: "20 August 2025", category: "LMV / MCWG", expiry: "19 August 2030" };
+      const records = { "UP671092871201": sampleRecord, "UP9081726354": secondSampleRecord };
+
+      const form = document.querySelector("#search-form");
+      const input = document.querySelector("#licence-input");
+      const result = document.querySelector("#result-card");
+      const error = document.querySelector("#error-message");
+
+      function search(value) {
+        const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
+        result.classList.remove("show");
+        error.classList.remove("show");
+
+        if (!key) {
+          error.textContent = "Please enter a licence or CNIC number.";
+          error.classList.add("show");
+          input.focus();
+          return;
+        }
+
+        const record = records[key];
+        if (!record) {
+          error.textContent = "Record not found.";
+          error.classList.add("show");
+          return;
+        }
+
+        document.querySelector("#full-name").textContent = record.name;
+        document.querySelector("#father-name").textContent = record.father;
+        document.querySelector("#date-of-birth").textContent = record.dateOfBirth;
+        document.querySelector("#first-issue").textContent = record.firstIssue;
+        document.querySelector("#issue-renewal").textContent = record.issueRenewal;
+        document.querySelector("#category").textContent = record.category;
+        document.querySelector("#valid-until").textContent = record.expiry;
+        document.querySelector("#licence-number").textContent = record.licence;
+        document.body.classList.add("results-view");
+        result.classList.add("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        search(input.value);
+      });
+
+      document.querySelectorAll("[data-sample]").forEach((button) => {
+        button.addEventListener("click", () => {
+          input.value = button.dataset.sample;
+          search(input.value);
+        });
+      });
+    </script>
+  </body>
+</html>
