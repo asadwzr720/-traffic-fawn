@@ -6,7 +6,7 @@
     <meta name="description" content="A responsive online driving licence verification interface." />
     <meta name="theme-color" content="#083a78" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23083a78'/%3E%3Cpath d='M18 17h28v30H18z' fill='white'/%3E%3Cpath d='m24 32 5 5 11-12' fill='none' stroke='%23e5303f' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-    <title>Online Licence Verification </title>
+    <title>Online Licence Verification</title>
     <style>
       :root {
         color-scheme: light;
@@ -256,31 +256,30 @@
 
     <script>
       const sampleRecord = { licence: "UP671092871201", name: "Bhupinder Kumar", father: "Puran Chand", dateOfBirth: "28 September 1998", firstIssue: "15 April 2019", issueRenewal: "15 April 2019", category: "LMV / MCWG", expiry: "14 April 2028" };
-const secondSampleRecord = { licence: "UP9081726354", name: "Aamir Shah", father: "Naeem Shah", dateOfBirth: "12 June 1994", firstIssue: "20 August 2020", issueRenewal: "20 August 2025", category: "LMV / MCWG", expiry: "19 August 2030" };
-const thirdRecord = { licence: "UP1831831833", name: "Arshad", father: "Gul Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
+      const secondSampleRecord = { licence: "UP9081726354", name: "Aamir Shah", father: "Naeem Shah", dateOfBirth: "12 June 1994", firstIssue: "20 August 2020", issueRenewal: "20 August 2025", category: "LMV / MCWG", expiry: "19 August 2030" };
+      const thirdRecord = { licence: "UP1831831833", name: "Arshad", father: "Gul Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
       const fourthRecord = { licence: "UP1831831834", name: "samood", father: "Gul Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
       const fifthRecord = { licence: "UP1831831835", name: "samood", father: "Gul Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
       const SixthRecord = { licence: "UP1831831838", name: "adil", father: "adil Raham", dateOfBirth: "10 October 2001", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
       const SeventhRecord = { licence: "UP1831831839", name: "Zeeshan Ullah", father: "Zer Ali Khan", dateOfBirth: "15 june 2006", firstIssue: "11/2000", issueRenewal: "11/2000", category: "Car", expiry: "26 August 2728" };
       const EighthRecord = { licence: "UP10676109288", name: "Akshay Kumar", father: " Wajid Kumar", dateOfBirth: "7 Octuber 1984", firstIssue: "16/09/2018", issueRenewal: "16/09/2018", category: "Motor Cycle + Motor Car Only", expiry: "15 September 2028" };
-
-const records = {
-  "UP671092871201": sampleRecord,
-  "UP9081726354": secondSampleRecord,
-  "UP1831831833": thirdRecord,
-  "UP1831831834" : fourthRecord,
-  "UP1831831835":  fifthRecord,
-  "UP1831831838": SixthRecord,
-  "UP1831831839": SeventhRecord,
-  "UP10676109288": EighthRecord,
-};
+      const records = {
+        "UP671092871201": sampleRecord,
+        "UP9081726354": secondSampleRecord,
+        "UP1831831833": thirdRecord,
+        "UP1831831834": fourthRecord,
+        "UP1831831835": fifthRecord,
+        "UP1831831838": SixthRecord,
+        "UP1831831839": SeventhRecord,
+        "UP10676109288": EighthRecord,
+      };
 
       const form = document.querySelector("#search-form");
       const input = document.querySelector("#licence-input");
       const result = document.querySelector("#result-card");
       const error = document.querySelector("#error-message");
 
- function search(value) {
+      function search(value) {
         const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
         result.classList.remove("show");
         error.classList.remove("show");
@@ -299,34 +298,7 @@ const records = {
           return;
         }
 
-  const record = records[key];
-  if (!record) {
-    error.textContent = "Record not found.";
-    error.classList.add("show");
-    return;
-  }
-
-  history.replaceState(null, "", `?licence=${encodeURIComponent(key)}`);
-
-  document.querySelector("#full-name").textContent = record.name;
-  document.querySelector("#father-name").textContent = record.father;
-  document.querySelector("#date-of-birth").textContent = record.dateOfBirth;
-  document.querySelector("#first-issue").textContent = record.firstIssue;
-  document.querySelector("#issue-renewal").textContent = record.issueRenewal;
-  document.querySelector("#category").textContent = record.category;
-  document.querySelector("#valid-until").textContent = record.expiry;
-  document.querySelector("#licence-number").textContent = record.licence;
-  document.body.classList.add("results-view");
-  result.classList.add("show");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-const fromUrl = new URLSearchParams(location.search).get("licence");
-if (fromUrl) {
-  input.value = fromUrl;
-  search(fromUrl);
-}
-
+        history.replaceState(null, "", `?licence=${encodeURIComponent(key)}`);
         document.querySelector("#full-name").textContent = record.name;
         document.querySelector("#father-name").textContent = record.father;
         document.querySelector("#date-of-birth").textContent = record.dateOfBirth;
@@ -338,6 +310,12 @@ if (fromUrl) {
         document.body.classList.add("results-view");
         result.classList.add("show");
         window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const fromUrl = new URLSearchParams(location.search).get("licence");
+      if (fromUrl) {
+        input.value = fromUrl;
+        search(fromUrl);
       }
 
       form.addEventListener("submit", (event) => {
