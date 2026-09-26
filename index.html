@@ -280,24 +280,45 @@ const records = {
       const result = document.querySelector("#result-card");
       const error = document.querySelector("#error-message");
 
-      function search(value) {
-        const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
-        result.classList.remove("show");
-        error.classList.remove("show");
+   function search(value) {
+  const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
+  result.classList.remove("show");
+  error.classList.remove("show");
 
-        if (!key) {
-          error.textContent = "Please enter a licence or CNIC number.";
-          error.classList.add("show");
-          input.focus();
-          return;
-        }
+  if (!key) {
+    error.textContent = "Please enter a licence or CNIC number.";
+    error.classList.add("show");
+    input.focus();
+    return;
+  }
 
-        const record = records[key];
-        if (!record) {
-          error.textContent = "Record not found.";
-          error.classList.add("show");
-          return;
-        }
+  const record = records[key];
+  if (!record) {
+    error.textContent = "Record not found.";
+    error.classList.add("show");
+    return;
+  }
+
+  history.replaceState(null, "", `?licence=${encodeURIComponent(key)}`);
+
+  document.querySelector("#full-name").textContent = record.name;
+  document.querySelector("#father-name").textContent = record.father;
+  document.querySelector("#date-of-birth").textContent = record.dateOfBirth;
+  document.querySelector("#first-issue").textContent = record.firstIssue;
+  document.querySelector("#issue-renewal").textContent = record.issueRenewal;
+  document.querySelector("#category").textContent = record.category;
+  document.querySelector("#valid-until").textContent = record.expiry;
+  document.querySelector("#licence-number").textContent = record.licence;
+  document.body.classList.add("results-view");
+  result.classList.add("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+const fromUrl = new URLSearchParams(location.search).get("licence");
+if (fromUrl) {
+  input.value = fromUrl;
+  search(fromUrl);
+}
 
         document.querySelector("#full-name").textContent = record.name;
         document.querySelector("#father-name").textContent = record.father;
