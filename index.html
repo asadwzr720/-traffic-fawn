@@ -280,17 +280,24 @@ const records = {
       const result = document.querySelector("#result-card");
       const error = document.querySelector("#error-message");
 
-   function search(value) {
-  const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
-  result.classList.remove("show");
-  error.classList.remove("show");
+ function search(value) {
+        const key = value.trim().replace(/[\s-]/g, "").toUpperCase();
+        result.classList.remove("show");
+        error.classList.remove("show");
 
-  if (!key) {
-    error.textContent = "Please enter a licence or CNIC number.";
-    error.classList.add("show");
-    input.focus();
-    return;
-  }
+        if (!key) {
+          error.textContent = "Please enter a licence or CNIC number.";
+          error.classList.add("show");
+          input.focus();
+          return;
+        }
+
+        const record = records[key];
+        if (!record) {
+          error.textContent = "Record not found.";
+          error.classList.add("show");
+          return;
+        }
 
   const record = records[key];
   if (!record) {
