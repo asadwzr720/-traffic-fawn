@@ -298,7 +298,6 @@
           return;
         }
 
-        history.replaceState(null, "", `?licence=${encodeURIComponent(key)}`);
         document.querySelector("#full-name").textContent = record.name;
         document.querySelector("#father-name").textContent = record.father;
         document.querySelector("#date-of-birth").textContent = record.dateOfBirth;
@@ -316,6 +315,7 @@
       if (fromUrl) {
         input.value = fromUrl;
         search(fromUrl);
+        history.replaceState(null, "", location.pathname);
       }
 
       form.addEventListener("submit", (event) => {
