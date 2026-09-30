@@ -6,7 +6,7 @@
 
   <title>Online Licence Verification</title>
 
-  <!-- Google Font: Inter (Weights 400 to 900) -->
+  <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
     }
 
     /* ========================================================
-       EXACT WATERCOLOR CLOUDY BACKGROUND PICTURE (Self-Contained)
+       BACKGROUND DIRECTLY LINKED TO green-texture.webp
     ======================================================== */
     body {
       min-width: 320px;
@@ -46,17 +46,10 @@
       font-family: var(--font-family);
       color: var(--color-dark-navy);
 
-      background-color: #c7deda;
-      background-image: 
-        radial-gradient(ellipse at 80% 15%, rgba(195, 230, 240, 0.75), transparent 50%),
-        radial-gradient(ellipse at 15% 30%, rgba(255, 255, 255, 0.9), transparent 45%),
-        radial-gradient(ellipse at 50% 50%, rgba(220, 245, 240, 0.6), transparent 50%),
-        radial-gradient(ellipse at 20% 85%, rgba(255, 255, 255, 0.8), transparent 45%),
-        radial-gradient(ellipse at 85% 85%, rgba(185, 225, 220, 0.7), transparent 45%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.3 0 0 0 0.78  0 0.35 0 0 0.88  0 0 0.35 0 0.85  0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
+      /* Aapki repository ki green-texture.webp file */
+      background: 
+        linear-gradient(rgba(225, 245, 238, 0.72), rgba(225, 245, 238, 0.72)),
+        url("green-texture.webp") center / cover fixed no-repeat;
 
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -304,7 +297,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
-    /* BOTTOM FEATURES LIST */
+    /* BOTTOM FEATURES */
     .features-bottom {
       width: fit-content;
       margin: 90px auto 0;
@@ -818,7 +811,7 @@
             id="showPassword"
           >
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z" stroke="currentColor" stroke-width="2"/>
               <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
             </svg>
           </button>
@@ -838,7 +831,7 @@
 <!-- RESULT PAGE VIEW -->
 <main class="result-page">
   <img
-    src="/result-banner.jpeg"
+    src="result-banner.jpeg"
     class="result-banner"
     alt="Licence Verification"
   >
@@ -1107,7 +1100,7 @@ resultSearchForm.addEventListener("submit", (event) => {
   searchLicence(resultInput.value);
 });
 
-/* URL PARAMETER HANDLING */
+/* URL PARAMETER */
 const fromUrl = new URLSearchParams(window.location.search).get("licence");
 if (fromUrl) {
   licenceInput.value = fromUrl;
