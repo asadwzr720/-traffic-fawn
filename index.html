@@ -6,7 +6,20 @@
 
   <title>Online Licence Verification</title>
 
+  <!-- Google Font: Inter (Exact matching screenshot font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+      --color-primary-blue: #1554b8;
+      --color-dark-navy: #0e1726;
+      --color-btn-red: #dc2626;
+      --color-btn-red-hover: #b91c1c;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -28,8 +41,8 @@
     body {
       min-width: 320px;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #111827;
+      font-family: var(--font-main);
+      color: var(--color-dark-navy);
 
       background: 
         linear-gradient(rgba(225, 245, 238, 0.72), rgba(225, 245, 238, 0.72)),
@@ -41,7 +54,7 @@
 
     button,
     input {
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: var(--font-main);
     }
 
     button {
@@ -111,7 +124,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #111827;
+      color: var(--color-dark-navy);
       font-size: 24px;
       font-weight: 800;
     }
@@ -132,7 +145,7 @@
     .menu-line {
       height: 1px;
       margin-top: 14px;
-      background: #222;
+      background: #e2e8f0;
     }
 
     .side-links {
@@ -145,15 +158,15 @@
       gap: 18px;
       padding: 16px 12px;
       border-radius: 8px;
-      color: #172132;
+      color: #1e293b;
       text-decoration: none;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       transition: background .15s ease;
     }
 
     .side-links a:hover {
-      background: #f5f6f8;
+      background: #f1f5f9;
     }
 
     .menu-icon {
@@ -181,92 +194,92 @@
 
     .hero {
       width: 100%;
-      max-width: 630px;
+      max-width: 520px;
       margin: 40px auto 0;
       text-align: center;
     }
 
     /* ========================================================
-       HEADING
+       EXACT SCREENSHOT HEADING (INTER 900 & COBALT BLUE)
     ======================================================== */
     .hero h1 {
-      margin: 0 auto 36px;
-      color: #1749c6;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: clamp(38px, 5.8vw, 54px);
-      line-height: 1.1;
-      font-weight: 900;
-      letter-spacing: -1.6px;
+      margin: 0 auto 32px;
+      color: var(--color-primary-blue);
+      font-family: var(--font-main);
+      font-size: clamp(34px, 5.2vw, 46px);
+      line-height: 1.18;
+      font-weight: 900; /* Extra bold solid shape */
+      letter-spacing: -0.6px;
       width: 100%;
     }
 
     /* ========================================================
-       SEARCH BAR (ALIGNED EXACTLY WITH "VERIFICATION SERVICES")
+       SEARCH BAR (ALIGNED PERFECTLY WITH "VERIFICATION SERVICES")
     ======================================================== */
     .search {
       width: 100%;
-      max-width: 630px;
+      max-width: 480px; /* Exact match with heading line */
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 78px;
+      grid-template-columns: 1fr 64px;
       overflow: hidden;
-      border-radius: 10px;
+      border-radius: 8px;
       background: #ffffff;
-      box-shadow: 0 6px 18px rgba(0,0,0,.14);
+      box-shadow: 0 6px 18px rgba(15, 34, 58, 0.12);
     }
 
     .search input {
       width: 100%;
-      height: 60px;
-      padding: 0 22px;
+      height: 56px;
+      padding: 0 18px;
       border: 0;
       outline: 0;
       background: #ffffff;
-      color: #111827;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .search input::placeholder {
-      color: #8892a0;
-      opacity: 1;
+      color: #1f2937;
+      font-size: 15px;
       font-weight: 500;
     }
 
+    .search input::placeholder {
+      color: #6b7280;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
     .search button {
-      height: 60px;
+      height: 56px;
       display: grid;
       place-items: center;
       border: 0;
-      background: #dc2626;
+      background: var(--color-btn-red);
       color: #ffffff;
       transition: background .15s ease;
     }
 
     .search button:hover {
-      background: #b91c1c;
+      background: var(--color-btn-red-hover);
     }
 
     .search button svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
     }
 
     /* ========================================================
-       • Secure • Fast • Reliable
+       • Secure • Fast • Reliable (EXACT BOLD & VISIBLE)
     ======================================================== */
     .features-inline {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 22px 32px;
-      margin-top: 38px;
+      gap: 20px 28px;
+      margin-top: 36px;
       color: #ffffff;
-      font-size: clamp(26px, 4.3vw, 36px);
+      font-size: clamp(24px, 4vw, 34px);
       font-weight: 900;
-      letter-spacing: -0.6px;
-      text-shadow: 0 2px 7px rgba(0, 0, 0, 0.18);
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 7px rgba(0, 0, 0, 0.16);
     }
 
     .features-inline span {
@@ -280,8 +293,8 @@
     .features-inline span::before {
       content: "";
       display: inline-block;
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       background-color: #ffffff;
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
@@ -290,59 +303,60 @@
     /* BOTTOM FEATURES */
     .features-bottom {
       width: fit-content;
-      margin: 90px auto 0;
+      margin: 85px auto 0;
       display: grid;
-      gap: 30px;
+      gap: 28px;
     }
 
     .feature {
       display: flex;
       align-items: center;
       gap: 16px;
-      color: #111827;
-      font-size: clamp(22px, 3.5vw, 29px);
+      color: var(--color-dark-navy);
+      font-size: clamp(22px, 3.4vw, 28px);
       font-weight: 900;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.4px;
     }
 
     .feature-text {
-      color: #111827;
+      color: var(--color-dark-navy);
       font-weight: 900;
     }
 
     .feature-icon {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       display: grid;
       place-items: center;
     }
 
     .feature-icon svg {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
     }
 
     .green {
-      color: #00ad56;
+      color: #16a34a;
     }
 
     .red {
-      color: #ef0015;
+      color: #dc2626;
     }
 
     .blue {
-      color: #1473ed;
+      color: #2563eb;
     }
 
     /* ERROR NOTIFICATION */
     .search-error {
       display: none;
-      max-width: 630px;
+      max-width: 480px;
       margin: 14px auto 0;
       padding: 10px 14px;
       border-radius: 8px;
-      background: #ffe7e9;
-      color: #a31522;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
       font-size: 15px;
       font-weight: 700;
       text-align: center;
@@ -384,7 +398,7 @@
 
     .login-box h2 {
       margin: 0 0 32px;
-      color: #172132;
+      color: var(--color-dark-navy);
       text-align: center;
       font-size: 30px;
       line-height: 1.2;
@@ -399,8 +413,8 @@
     .login-field label {
       display: block;
       margin-bottom: 8px;
-      color: #273447;
-      font-size: 16px;
+      color: #334155;
+      font-size: 15px;
       font-weight: 600;
     }
 
@@ -412,7 +426,7 @@
       border-radius: 8px;
       outline: none;
       background: #ffffff;
-      color: #172132;
+      color: #0f172a;
       font-size: 16px;
       transition: border-color .15s ease;
     }
@@ -422,7 +436,7 @@
     }
 
     .login-field input:focus {
-      border-color: #1749c6;
+      border-color: var(--color-primary-blue);
     }
 
     .password-wrap {
@@ -444,7 +458,7 @@
       place-items: center;
       border: 0;
       background: transparent;
-      color: #536178;
+      color: #64748b;
     }
 
     .show-password svg {
@@ -458,15 +472,15 @@
       margin-top: 10px;
       border: 0;
       border-radius: 8px;
-      background: #000;
+      background: var(--color-dark-navy);
       color: #fff;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       transition: background .15s ease;
     }
 
     .admin-login-btn:hover {
-      background: #222;
+      background: #1e293b;
     }
 
     /* =========================
@@ -524,7 +538,7 @@
       display: grid;
       place-items: center;
       border: 0;
-      background: #e60012;
+      background: var(--color-btn-red);
       color: #fff;
     }
 
@@ -543,69 +557,58 @@
 
     .result-head {
       padding: 16px;
-      background: #e5e7eb;
-      color: #111;
+      background: #0f172a;
+      color: #ffffff;
       text-align: center;
       font-size: 16px;
       font-weight: 700;
     }
 
     .detail {
-      border-bottom: 1px solid #111;
+      border-bottom: 1px solid #f1f5f9;
     }
 
     .detail:last-child {
       border-bottom: 0;
     }
 
-    .detail:nth-child(odd) {
-      background: #f3f4f6;
+    .detail:nth-child(even) {
+      background: #f8fafc;
     }
 
     .detail label,
     .detail strong {
       display: block;
       padding: 12px 18px;
-      color: #111;
       font-size: 15px;
     }
 
     .detail label {
-      border-bottom: 1px solid #d1d5db;
-      font-weight: 500;
+      color: #64748b;
+      font-weight: 600;
+      border-bottom: 1px solid #f1f5f9;
     }
 
     .detail strong {
+      color: #0f172a;
       font-weight: 700;
     }
 
     /* RESPONSIVE MOBILE FIX */
-    @media (max-width: 700px) {
-      .hero,
-      .search,
-      .search-error {
-        max-width: 90%;
-      }
-      .search {
-        grid-template-columns: 1fr 68px;
-      }
-    }
-
     @media (max-width: 480px) {
       .hero h1 {
-        font-size: 34px;
-        letter-spacing: -1.2px;
+        font-size: 30px;
       }
       .features-inline {
-        font-size: 24px;
-        gap: 16px;
+        font-size: 22px;
+        gap: 14px;
       }
       .features-inline span::before {
         width: 8px;
         height: 8px;
       }
       .feature {
-        font-size: 22px;
+        font-size: 21px;
       }
       .features-bottom {
         margin-top: 60px;
