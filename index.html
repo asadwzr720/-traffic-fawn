@@ -1,1602 +1,1045 @@
 <!doctype html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta charset="UTF-8">
+<title>Online Licence Verification</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
+<style>
+*{
+  box-sizing:border-box;
+}
 
-  <meta
-    name="description"
-    content="Online licence verification"
-  >
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
 
-  <title>Online Licence Verification</title>
+body{
+  min-width:320px;
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#111827;
 
+  background:
+    linear-gradient(
+      rgba(225,245,238,.78),
+      rgba(225,245,238,.78)
+    ),
+    url("/green-texture.webp") center/cover fixed no-repeat;
+}
 
-  <style>
+button,
+input{
+  font-family:Arial,Helvetica,sans-serif;
+}
 
-    /* =========================================
-       BASIC
-    ========================================= */
+button{
+  cursor:pointer;
+}
 
-    * {
-      box-sizing: border-box;
-    }
 
-    html {
-      scroll-behavior: smooth;
-    }
+/* =========================
+   MENU BUTTON
+========================= */
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-    }
+.menu-btn{
+  position:fixed;
+  top:22px;
+  right:24px;
+  z-index:100;
 
-    body {
-      min-width: 320px;
-      min-height: 100vh;
+  width:48px;
+  height:48px;
 
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+  display:grid;
+  place-items:center;
 
-      color: #111827;
+  border:0;
+  padding:0;
 
-      background:
-        linear-gradient(
-          rgba(225, 245, 238, 0.82),
-          rgba(225, 245, 238, 0.82)
-        ),
-        url("/green-texture.webp")
-        center / cover
-        fixed
-        no-repeat;
-    }
+  background:transparent;
+  color:#000;
 
-    button,
-    input {
-      font: inherit;
-    }
+  font-size:34px;
+  font-weight:900;
+}
 
-    button {
-      cursor: pointer;
-    }
 
+/* =========================
+   MENU OVERLAY
+========================= */
 
-    /* =========================================
-       HAMBURGER BUTTON
-    ========================================= */
+.menu-overlay{
+  position:fixed;
+  inset:0;
+  z-index:998;
 
-    .menu-btn {
-      position: fixed;
+  background:rgba(0,0,0,.35);
 
-      top: 22px;
-      right: 24px;
+  opacity:0;
+  visibility:hidden;
 
-      z-index: 100;
+  transition:.25s;
+}
 
-      width: 48px;
-      height: 48px;
+body.menu-open .menu-overlay{
+  opacity:1;
+  visibility:visible;
+}
 
-      display: grid;
-      place-items: center;
 
-      padding: 0;
+/* =========================
+   SIDE MENU
+========================= */
 
-      border: 0;
+.side-menu{
+  position:fixed;
+  top:0;
+  right:0;
+  z-index:999;
 
-      background: transparent;
+  width:min(67vw,440px);
+  height:100vh;
 
-      color: #000;
+  padding:45px 44px;
 
-      font-size: 34px;
-      font-weight: 800;
+  background:#fff;
 
-      line-height: 1;
-    }
+  transform:translateX(100%);
+  transition:transform .28s ease;
 
+  box-shadow:-5px 0 20px rgba(0,0,0,.08);
+}
 
-    /* =========================================
-       MENU OVERLAY
-    ========================================= */
+body.menu-open .side-menu{
+  transform:translateX(0);
+}
 
-    .menu-overlay {
-      position: fixed;
+.menu-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-      inset: 0;
+  color:#111827;
 
-      z-index: 998;
+  font-size:25px;
+  font-weight:800;
+}
 
-      background:
-        rgba(0, 0, 0, 0.35);
+.close-menu{
+  width:42px;
+  height:42px;
 
-      opacity: 0;
+  display:grid;
+  place-items:center;
 
-      visibility: hidden;
+  border:0;
+  padding:0;
 
-      transition:
-        opacity .25s ease,
-        visibility .25s ease;
-    }
+  background:transparent;
 
+  color:#111;
 
-    body.menu-open .menu-overlay {
-      opacity: 1;
+  font-size:38px;
+  font-weight:800;
+}
 
-      visibility: visible;
-    }
+.menu-line{
+  height:1px;
+  margin-top:12px;
+  background:#222;
+}
 
+.side-links{
+  padding-top:25px;
+}
 
-    /* =========================================
-       SIDE MENU
-    ========================================= */
+.side-links a{
+  display:flex;
+  align-items:center;
 
-    .side-menu {
-      position: fixed;
+  gap:22px;
 
-      top: 0;
-      right: 0;
+  padding:19px 12px;
 
-      z-index: 999;
+  border-radius:8px;
 
-      width: min(67vw, 440px);
+  color:#172132;
 
-      height: 100vh;
+  text-decoration:none;
 
-      padding: 45px 44px;
+  font-size:25px;
+  font-weight:500;
+}
 
-      background: #ffffff;
+.side-links a:hover{
+  background:#f5f6f8;
+}
 
-      transform:
-        translateX(100%);
+.menu-icon{
+  width:32px;
+  height:32px;
 
-      transition:
-        transform .28s ease;
+  display:grid;
+  place-items:center;
+}
 
-      box-shadow:
-        -5px 0 20px
-        rgba(0,0,0,.08);
-    }
+.menu-icon svg{
+  width:27px;
+  height:27px;
+}
 
 
-    body.menu-open .side-menu {
-      transform:
-        translateX(0);
-    }
+/* =========================
+   HOME
+========================= */
 
+.home{
+  min-height:100vh;
+  padding:25px 20px 60px;
+}
 
-    .menu-header {
-      display: flex;
 
-      align-items: center;
+/*
+  This controls the exact vertical
+  position of heading + search.
+*/
 
-      justify-content:
-        space-between;
+.hero{
+  width:100%;
+  max-width:700px;
 
-      color: #111827;
+  margin:250px auto 0;
 
-      font-size: 25px;
+  text-align:center;
+}
 
-      font-weight: 700;
-    }
 
+/* =========================
+   MAIN HEADING
+========================= */
 
-    .close-menu {
-      width: 42px;
-      height: 42px;
+.hero h1{
+  margin:0 0 45px;
 
-      display: grid;
-      place-items: center;
+  color:#1749c6;
 
-      padding: 0;
+  font-size:clamp(42px,6vw,60px);
 
-      border: 0;
+  line-height:1.08;
 
-      background: transparent;
+  font-weight:900;
 
-      color: #111;
+  letter-spacing:-1.5px;
+}
 
-      font-size: 38px;
 
-      font-weight: 700;
+/* =========================
+   SEARCH BAR
+========================= */
 
-      line-height: 1;
-    }
+.search{
+  width:100%;
+  max-width:670px;
 
+  margin:0 auto;
 
-    .menu-line {
-      height: 1px;
+  display:grid;
 
-      margin-top: 12px;
+  grid-template-columns:1fr 85px;
 
-      background: #222;
-    }
+  overflow:hidden;
 
+  border-radius:12px;
 
-    .side-links {
-      padding-top: 25px;
-    }
+  background:#fff;
 
+  box-shadow:
+    0 6px 12px
+    rgba(0,0,0,.16);
+}
 
-    .side-links a {
-      display: flex;
 
-      align-items: center;
+/* SEARCH INPUT */
 
-      gap: 22px;
+.search input{
+  width:100%;
+  height:72px;
 
-      padding: 19px 12px;
+  padding:0 22px;
 
-      border-radius: 8px;
+  border:0;
+  outline:0;
 
-      color: #172132;
+  background:#fff;
 
-      text-decoration: none;
+  color:#111827;
 
-      font-size: 25px;
+  font-size:20px;
 
-      font-weight: 400;
-    }
+  font-weight:700;
+}
 
 
-    .side-links a:hover {
-      background: #f5f6f8;
-    }
+/* PLACEHOLDER */
 
+.search input::placeholder{
+  color:#9ca3af;
 
-    .menu-icon {
-      width: 32px;
-      height: 32px;
+  opacity:1;
 
-      display: grid;
-      place-items: center;
+  font-weight:700;
+}
 
-      color: #172132;
-    }
 
+/* RED SEARCH BUTTON */
 
-    .menu-icon svg {
-      width: 27px;
-      height: 27px;
-    }
+.search button{
+  height:72px;
 
+  display:grid;
+  place-items:center;
 
-    /* =========================================
-       HOME PAGE
-    ========================================= */
+  border:0;
 
-    .home {
-      min-height: 100vh;
+  background:#ef0015;
 
-      padding:
-        25px 20px 60px;
-    }
+  color:#fff;
+}
 
+.search button:hover{
+  background:#d90013;
+}
 
-    .hero {
-      max-width: 700px;
+.search button svg{
+  width:34px;
+  height:34px;
+}
 
-      margin:
-        250px auto 0;
 
-      text-align: center;
-    }
+/* =========================
+   SECURE FAST RELIABLE
+========================= */
 
+.features-inline{
+  display:flex;
 
-    .hero h1 {
-      margin:
-        0 0 45px;
+  justify-content:center;
 
-      color: #1749c6;
+  flex-wrap:wrap;
 
-      font-size:
-        clamp(
-          42px,
-          7vw,
-          68px
-        );
+  gap:38px;
 
-      line-height: 1.1;
+  margin-top:48px;
 
-      font-weight: 800;
+  color:#fff;
 
-      letter-spacing:
-        -1.5px;
-    }
+  font-size:27px;
 
+  font-weight:900;
 
-    /* =========================================
-       HOME SEARCH
-    ========================================= */
+  text-shadow:
+    0 3px 7px
+    rgba(0,0,0,.14);
+}
 
-    .search {
-      width: 100%;
+.features-inline span{
+  color:#fff;
+  font-weight:900;
+}
 
-      display: grid;
 
-      grid-template-columns:
-        1fr 85px;
+/* =========================
+   BOTTOM FEATURES
+========================= */
 
-      overflow: hidden;
+.features-bottom{
+  width:fit-content;
 
-      border-radius: 12px;
+  margin:135px auto 0;
 
-      background: #fff;
+  display:grid;
 
-      box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.15);
-    }
+  gap:38px;
+}
 
+.feature{
+  display:flex;
 
-    .search input {
-      width: 100%;
+  align-items:center;
 
-      height: 72px;
+  gap:18px;
 
-      padding:
-        0 22px;
+  color:#111827;
 
-      border: 0;
+  font-size:28px;
 
-      outline: 0;
+  font-weight:900;
 
-      background: white;
+  letter-spacing:-.5px;
+}
 
-      color: #222;
+.feature-text{
+  color:#111827;
+  font-weight:900;
+}
 
-      font-size: 22px;
+.feature-icon{
+  width:52px;
+  height:52px;
 
-      font-weight: 400;
-    }
+  display:grid;
+  place-items:center;
+}
 
+.feature-icon svg{
+  width:48px;
+  height:48px;
+}
 
-    .search input::placeholder {
-      color: #9ca3af;
+.green{
+  color:#00ad56;
+}
 
-      opacity: 1;
-    }
+.red{
+  color:#ef0015;
+}
 
+.blue{
+  color:#1473ed;
+}
 
-    .search button {
-      height: 72px;
 
-      display: grid;
+/* =========================
+   SEARCH ERROR
+========================= */
 
-      place-items: center;
+.search-error{
+  display:none;
 
-      border: 0;
+  max-width:670px;
 
-      background: #ef0015;
+  margin:18px auto 0;
 
-      color: white;
-    }
+  padding:13px 16px;
 
+  border-radius:8px;
 
-    .search button:hover {
-      background: #d90013;
-    }
+  background:#ffe7e9;
 
+  color:#a31522;
 
-    .search button svg {
-      width: 34px;
-      height: 34px;
-    }
+  font-weight:700;
 
+  text-align:center;
+}
 
-    /* =========================================
-       SECURE FAST RELIABLE
-    ========================================= */
+.search-error.show{
+  display:block;
+}
 
-    .features-inline {
-      display: flex;
 
-      justify-content:
-        center;
+/* =========================
+   LOGIN PAGE
+========================= */
 
-      gap: 42px;
+.login-page{
+  display:none;
 
-      flex-wrap: wrap;
+  min-height:100vh;
 
-      margin-top: 55px;
+  padding:25px;
 
-      color: #ffffff;
+  align-items:center;
+  justify-content:center;
+}
 
-      font-size: 30px;
+body.login-view .home,
+body.login-view .result-page{
+  display:none !important;
+}
 
-      font-weight: 800;
+body.login-view .login-page{
+  display:flex;
+}
 
-      text-shadow:
-        0 3px 7px
-        rgba(0,0,0,.14);
-    }
+.login-box{
+  width:min(100%,570px);
 
+  margin-top:-30px;
+}
 
-    .features-inline span {
-      color: #ffffff;
-    }
+.login-box h2{
+  margin:0 0 55px;
 
+  color:#172132;
 
-    /* =========================================
-       BOTTOM FEATURES
-    ========================================= */
+  text-align:center;
 
-    .features-bottom {
-      width: fit-content;
+  font-size:42px;
 
-      margin:
-        150px auto 0;
+  line-height:1.2;
 
-      display: grid;
+  font-weight:700;
 
-      gap: 42px;
-    }
+  letter-spacing:-1px;
+}
 
+.login-field{
+  margin-bottom:32px;
+}
 
-    .feature {
-      display: flex;
+.login-field label{
+  display:block;
 
-      align-items: center;
+  margin-bottom:14px;
 
-      gap: 20px;
+  color:#273447;
 
-      color: #111827;
+  font-size:25px;
 
-      font-size: 30px;
+  font-weight:500;
+}
 
-      font-weight: 800;
+.login-field input{
+  width:100%;
+  height:76px;
 
-      letter-spacing:
-        -.5px;
-    }
+  padding:0 22px;
 
+  border:1px solid rgba(100,116,139,.15);
 
-    .feature-icon {
-      width: 52px;
-      height: 52px;
+  border-radius:10px;
 
-      display: grid;
+  outline:none;
 
-      place-items: center;
-    }
+  background:rgba(255,255,255,.08);
 
+  color:#172132;
 
-    .feature-icon svg {
-      width: 48px;
-      height: 48px;
-    }
+  font-size:26px;
+}
 
+.login-field input::placeholder{
+  color:#69716f;
+  opacity:1;
+}
 
-    .green {
-      color: #00ad56;
-    }
+.login-field input:focus{
+  border-color:rgba(23,33,50,.40);
 
+  background:rgba(255,255,255,.15);
+}
 
-    .red {
-      color: #ef0015;
-    }
 
+/* PASSWORD */
 
-    .blue {
-      color: #1473ed;
-    }
+.password-wrap{
+  position:relative;
+}
 
+.password-wrap input{
+  padding-right:70px;
+}
 
-    /* =========================================
-       SEARCH ERROR
-    ========================================= */
+.show-password{
+  position:absolute;
 
-    .error {
-      display: none;
+  top:50%;
+  right:15px;
 
-      max-width: 700px;
+  transform:translateY(-50%);
 
-      margin:
-        20px auto 0;
+  width:45px;
+  height:45px;
 
-      padding:
-        14px 18px;
+  display:grid;
+  place-items:center;
 
-      border-radius: 8px;
+  border:0;
 
-      background: #ffe7e9;
+  background:transparent;
 
-      color: #a31522;
+  color:#536178;
+}
 
-      text-align: center;
+.show-password svg{
+  width:28px;
+  height:28px;
+}
 
-      font-weight: 600;
-    }
 
+/* LOGIN BUTTON */
 
-    .error.show {
-      display: block;
-    }
+.admin-login-btn{
+  width:100%;
+  height:75px;
 
+  border:0;
 
-    /* =========================================
-       LOGIN PAGE
-    ========================================= */
+  border-radius:10px;
 
-    .login-page {
-      display: none;
+  background:#000;
 
-      min-height: 100vh;
+  color:#fff;
 
-      padding: 20px;
+  font-size:27px;
 
-      align-items: center;
+  font-weight:500;
+}
 
-      justify-content: center;
-    }
 
+/* =========================
+   RESULT PAGE
+========================= */
 
-    body.login-view .home,
-    body.login-view .result-page {
-      display: none !important;
-    }
+.result-page{
+  display:none;
 
+  width:min(calc(100% - 24px),660px);
 
-    body.login-view .login-page {
-      display: flex;
-    }
+  margin:auto;
 
+  padding:12px 0 35px;
+}
 
-    .login-box {
-      width:
-        min(100%, 570px);
+body.results-view .home,
+body.results-view .login-page{
+  display:none !important;
+}
 
-      margin-top: -30px;
-    }
+body.results-view .result-page{
+  display:block;
+}
 
+body.results-view .menu-btn{
+  display:none;
+}
 
-    .login-box h2 {
-      margin:
-        0 0 55px;
+.result-banner{
+  display:block;
 
-      color: #172132;
+  width:100%;
+  height:auto;
 
-      text-align: center;
+  margin-bottom:18px;
+}
 
-      font-size: 42px;
 
-      line-height: 1.2;
+/* RESULT SEARCH */
 
-      font-weight: 500;
+.result-search{
+  display:grid;
 
-      letter-spacing: -1px;
-    }
+  grid-template-columns:1fr 72px;
 
+  overflow:hidden;
 
-    .login-field {
-      margin-bottom: 32px;
-    }
+  margin-bottom:22px;
 
+  border-radius:10px;
 
-    .login-field label {
-      display: block;
+  background:#fff;
 
-      margin-bottom: 14px;
+  box-shadow:0 5px 12px rgba(0,0,0,.15);
+}
 
-      color: #273447;
+.result-search input{
+  width:100%;
+  height:56px;
 
-      font-size: 25px;
+  padding:0 16px;
 
-      font-weight: 400;
-    }
+  border:0;
 
+  outline:0;
 
-    .login-field input {
-      width: 100%;
+  font-size:17px;
+}
 
-      height: 76px;
+.result-search button{
+  display:grid;
+  place-items:center;
 
-      padding:
-        0 22px;
+  border:0;
 
-      border:
-        1px solid
-        rgba(100,116,139,.15);
+  background:#e60012;
 
-      border-radius: 10px;
+  color:#fff;
+}
 
-      outline: none;
+.result-search svg{
+  width:28px;
+  height:28px;
+}
 
-      background:
-        rgba(255,255,255,.08);
 
-      color: #172132;
+/* RESULT CARD */
 
-      font-size: 26px;
+.result-card{
+  overflow:hidden;
 
-      font-weight: 400;
-    }
+  border-radius:10px;
 
+  background:#fff;
 
-    .login-field input::placeholder {
-      color: #69716f;
+  box-shadow:0 5px 12px rgba(0,0,0,.15);
+}
 
-      opacity: 1;
-    }
+.result-head{
+  padding:17px;
 
+  background:#e5e7eb;
 
-    .login-field input:focus {
-      border-color:
-        rgba(23,33,50,.40);
+  color:#111;
 
-      background:
-        rgba(255,255,255,.15);
-    }
+  text-align:center;
 
+  font-size:17px;
 
-    /* =========================================
-       PASSWORD
-    ========================================= */
+  font-weight:700;
+}
 
-    .password-wrap {
-      position: relative;
-    }
+.detail{
+  border-bottom:1px solid #111;
+}
 
+.detail:last-child{
+  border-bottom:0;
+}
 
-    .password-wrap input {
-      padding-right: 70px;
-    }
+.detail:nth-child(odd){
+  background:#f3f4f6;
+}
 
+.detail label,
+.detail strong{
+  display:block;
 
-    .show-password {
-      position: absolute;
+  padding:13px 16px;
 
-      top: 50%;
+  color:#111;
 
-      right: 15px;
+  font-size:16px;
+}
 
-      transform:
-        translateY(-50%);
+.detail label{
+  border-bottom:1px solid #d1d5db;
 
-      width: 45px;
-      height: 45px;
+  font-weight:500;
+}
 
-      display: grid;
+.detail strong{
+  font-weight:700;
+}
 
-      place-items: center;
 
-      padding: 0;
+/* =========================
+   TABLET / MOBILE
+========================= */
 
-      border: 0;
+@media(max-width:700px){
 
-      background: transparent;
+  .hero{
+    max-width:700px;
 
-      color: #536178;
-    }
+    margin:250px auto 0;
+  }
 
+  .hero h1{
+    margin-bottom:45px;
 
-    .show-password svg {
-      width: 28px;
-      height: 28px;
-    }
+    font-size:42px;
 
+    font-weight:900;
+  }
 
-    /* =========================================
-       LOGIN BUTTON
-    ========================================= */
+  .search{
+    width:100%;
 
-    .admin-login-btn {
-      width: 100%;
+    max-width:670px;
 
-      height: 75px;
+    grid-template-columns:1fr 70px;
+  }
 
-      border: 0;
+  .search input,
+  .search button{
+    height:62px;
+  }
 
-      border-radius: 10px;
+  .search input{
+    padding:0 18px;
 
-      background: #000000;
+    font-size:17px;
 
-      color: #ffffff;
+    font-weight:700;
+  }
 
-      font-size: 27px;
+  .search input::placeholder{
+    font-weight:700;
+  }
 
-      font-weight: 400;
-    }
+  .features-inline{
+    margin-top:43px;
 
+    gap:20px;
 
-    .admin-login-btn:active {
-      transform:
-        scale(.99);
-    }
+    font-size:20px;
 
+    font-weight:900;
+  }
 
-    .login-error {
-      display: none;
+  .features-bottom{
+    margin-top:125px;
 
-      margin-top: 16px;
+    gap:32px;
+  }
 
-      padding: 12px;
+  .feature{
+    font-size:23px;
 
-      border-radius: 8px;
+    font-weight:900;
+  }
 
-      background: #ffe7e9;
+  .feature-icon{
+    width:44px;
+    height:44px;
+  }
 
-      color: #a31522;
+  .feature-icon svg{
+    width:42px;
+    height:42px;
+  }
 
-      text-align: center;
-    }
+  .side-menu{
+    width:67%;
 
+    padding:35px 28px;
+  }
 
-    /* =========================================
-       RESULT PAGE
-    ========================================= */
+  .menu-header{
+    font-size:22px;
+  }
 
-    .result-page {
-      display: none;
+  .side-links a{
+    gap:18px;
 
-      width:
-        min(
-          calc(100% - 24px),
-          660px
-        );
+    font-size:21px;
+  }
 
-      margin: auto;
+  .menu-btn{
+    top:15px;
+    right:16px;
+  }
 
-      padding:
-        12px 0 35px;
-    }
+  .login-box{
+    width:100%;
 
+    margin-top:-20px;
+  }
 
-    body.results-view .home,
-    body.results-view .login-page {
-      display: none !important;
-    }
+  .login-box h2{
+    margin-bottom:45px;
 
+    font-size:32px;
+  }
 
-    body.results-view .result-page {
-      display: block;
-    }
+  .login-field label{
+    font-size:20px;
+  }
 
+  .login-field input{
+    height:64px;
 
-    body.results-view .menu-btn {
-      display: none;
-    }
+    font-size:20px;
+  }
 
+  .admin-login-btn{
+    height:64px;
 
-    .result-banner {
-      display: block;
+    font-size:22px;
+  }
+}
 
-      width: 100%;
 
-      height: auto;
+/* PHONE */
 
-      margin-bottom: 18px;
-    }
+@media(max-width:430px){
 
+  .home{
+    padding-left:18px;
+    padding-right:18px;
+  }
 
-    /* =========================================
-       RESULT SEARCH
-    ========================================= */
+  .hero{
+    margin-top:185px;
+  }
 
-    .result-search {
-      display: grid;
+  .hero h1{
+    margin-bottom:38px;
 
-      grid-template-columns:
-        1fr 72px;
+    font-size:36px;
+  }
 
-      overflow: hidden;
+  .search{
+    grid-template-columns:1fr 65px;
+  }
 
-      margin-bottom: 22px;
+  .search input,
+  .search button{
+    height:60px;
+  }
 
-      border-radius: 10px;
+  .search input{
+    font-size:15px;
+  }
 
-      background: white;
+  .features-inline{
+    gap:13px;
 
-      box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.15);
-    }
+    font-size:17px;
+  }
 
+  .features-bottom{
+    margin-top:105px;
+  }
 
-    .result-search input {
-      width: 100%;
+  .feature{
+    font-size:20px;
+  }
+}
 
-      height: 56px;
-
-      padding:
-        0 16px;
-
-      border: 0;
-
-      outline: 0;
-
-      font-size: 17px;
-    }
-
-
-    .result-search button {
-      display: grid;
-
-      place-items: center;
-
-      border: 0;
-
-      background: #e60012;
-
-      color: white;
-    }
-
-
-    .result-search svg {
-      width: 28px;
-      height: 28px;
-    }
-
-
-    /* =========================================
-       RESULT CARD
-    ========================================= */
-
-    .result-card {
-      overflow: hidden;
-
-      border-radius: 10px;
-
-      background: white;
-
-      box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.15);
-    }
-
-
-    .result-head {
-      padding: 17px;
-
-      background: #e5e7eb;
-
-      color: #111;
-
-      text-align: center;
-
-      font-size: 17px;
-    }
-
-
-    .detail {
-      border-bottom:
-        1px solid #111;
-    }
-
-
-    .detail:last-child {
-      border-bottom: 0;
-    }
-
-
-    .detail:nth-child(odd) {
-      background: #f3f4f6;
-    }
-
-
-    .detail label,
-    .detail strong {
-      display: block;
-
-      padding:
-        13px 16px;
-
-      color: #111;
-
-      font-size: 16px;
-
-      font-weight: 400;
-    }
-
-
-    .detail label {
-      border-bottom:
-        1px solid #d1d5db;
-    }
-
-
-    /* =========================================
-       MOBILE
-    ========================================= */
-
-    @media (max-width: 700px) {
-
-      .hero {
-        margin-top: 160px;
-      }
-
-
-      .hero h1 {
-        margin-bottom: 35px;
-
-        font-size: 43px;
-      }
-
-
-      .search {
-        grid-template-columns:
-          1fr 68px;
-      }
-
-
-      .search input,
-      .search button {
-        height: 62px;
-      }
-
-
-      .search input {
-        font-size: 17px;
-      }
-
-
-      .features-inline {
-        gap: 18px;
-
-        margin-top: 40px;
-
-        font-size: 20px;
-      }
-
-
-      .features-bottom {
-        margin-top: 100px;
-
-        gap: 30px;
-      }
-
-
-      .feature {
-        font-size: 22px;
-      }
-
-
-      .feature-icon {
-        width: 42px;
-
-        height: 42px;
-      }
-
-
-      .feature-icon svg {
-        width: 40px;
-
-        height: 40px;
-      }
-
-
-      .side-menu {
-        width: 67%;
-
-        padding:
-          35px 28px;
-      }
-
-
-      .menu-header {
-        font-size: 22px;
-      }
-
-
-      .side-links a {
-        gap: 18px;
-
-        font-size: 21px;
-      }
-
-
-      .menu-btn {
-        top: 15px;
-
-        right: 16px;
-      }
-
-
-      .login-page {
-        padding: 25px;
-      }
-
-
-      .login-box {
-        width: 100%;
-
-        margin-top: -20px;
-      }
-
-
-      .login-box h2 {
-        margin-bottom: 45px;
-
-        font-size: 32px;
-      }
-
-
-      .login-field label {
-        font-size: 20px;
-      }
-
-
-      .login-field input {
-        height: 64px;
-
-        font-size: 20px;
-      }
-
-
-      .admin-login-btn {
-        height: 64px;
-
-        font-size: 22px;
-      }
-
-    }
-
-
-    @media (max-width: 430px) {
-
-      .hero {
-        margin-top: 125px;
-      }
-
-
-      .hero h1 {
-        font-size: 37px;
-      }
-
-
-      .features-inline {
-        gap: 14px;
-
-        font-size: 17px;
-      }
-
-
-      .feature {
-        font-size: 20px;
-      }
-
-
-      .side-menu {
-        width: 67%;
-
-        padding:
-          28px 22px;
-      }
-
-
-      .login-box h2 {
-        font-size: 29px;
-      }
-
-    }
-
-  </style>
-
+</style>
 </head>
 
 
 <body>
 
 
-  <!-- =========================================
-       HAMBURGER
-  ========================================== -->
-
-  <button
-    type="button"
-    class="menu-btn"
-    id="menuBtn"
-    aria-label="Open menu"
-  >
-    ☰
-  </button>
-
-
-  <!-- MENU OVERLAY -->
-
-  <div
-    class="menu-overlay"
-    id="menuOverlay"
-  ></div>
-
-
-  <!-- =========================================
-       SIDE MENU
-  ========================================== -->
-
-  <aside
-    class="side-menu"
-    id="sideMenu"
-  >
-
-    <div class="menu-header">
-
-      <strong>
-        Menu
-      </strong>
-
-
-      <button
-        type="button"
-        class="close-menu"
-        id="closeMenu"
-        aria-label="Close menu"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="menu-line"></div>
-
-
-    <nav class="side-links">
-
-
-      <!-- HOME -->
-
-      <a
-        href="#"
-        id="homeLink"
-      >
-
-        <span class="menu-icon">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-
-            <path
-              d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"
-            />
-
-          </svg>
-
-        </span>
-
-
-        <span>
-          Home
-        </span>
-
-      </a>
-
-
-      <!-- LOGIN -->
-
-      <a
-        href="#"
-        id="loginLink"
-      >
-
-        <span class="menu-icon">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-
-            <circle
-              cx="12"
-              cy="7"
-              r="4"
-            />
-
-            <path
-              d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z"
-            />
-
-          </svg>
-
-        </span>
-
-
-        <span>
-          Login
-        </span>
-
-      </a>
-
-
-    </nav>
-
-  </aside>
-
-
-  <!-- =========================================
-       HOME PAGE
-  ========================================== -->
-
-  <main class="home">
-
-
-    <section class="hero">
-
-
-      <h1>
-        Welcome To Online<br>
-        Verification Services
-      </h1>
-
-
-      <!-- SEARCH -->
-
-      <form
-        class="search"
-        id="searchForm"
-      >
-
-
-        <input
-          id="licenceInput"
-          type="text"
-          inputmode="text"
-          autocomplete="off"
-          placeholder="Type DL/CNIC Number Without Dash"
-          aria-label="Licence or CNIC number"
-        >
-
-
-        <button
-          type="submit"
-          aria-label="Search"
-        >
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-              stroke="currentColor"
-              stroke-width="2.5"
-            />
-
-            <path
-              d="m16.5 16.5 4 4"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-            />
-
-          </svg>
-
-        </button>
-
-
-      </form>
-
-
-      <div
-        class="error"
-        id="searchError"
-      ></div>
-
-
-      <!-- SECURE FAST RELIABLE -->
-
-      <div class="features-inline">
-
-        <span>
-          • Secure
-        </span>
-
-        <span>
-          • Fast
-        </span>
-
-        <span>
-          • Reliable
-        </span>
-
-      </div>
-
-
-    </section>
-
-
-    <!-- =========================================
-         FEATURES
-    ========================================== -->
-
-    <section class="features-bottom">
-
-
-      <!-- SECURITY -->
-
-      <div class="feature">
-
-
-        <span class="feature-icon green">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-
-            <path
-              d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"
-            />
-
-          </svg>
-
-        </span>
-
-
-        <span>
-          Digital Security
-        </span>
-
-
-      </div>
-
-
-      <!-- 24/7 -->
-
-      <div class="feature">
-
-
-        <span class="feature-icon red">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-
-            <circle
-              cx="12"
-              cy="12"
-              r="10"
-            />
-
-            <path
-              d="M12 6v6l4 2"
-              fill="none"
-              stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-
-          </svg>
-
-        </span>
-
-
-        <span>
-          24/7 Available
-        </span>
-
-
-      </div>
-
-
-      <!-- GLOBAL -->
-
-      <div class="feature">
-
-
-        <span class="feature-icon blue">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-
-            <circle
-              cx="12"
-              cy="12"
-              r="9"
-            />
-
-            <path
-              d="M3 12h18"
-            />
-
-            <path
-              d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21"
-            />
-
-            <path
-              d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"
-            />
-
-          </svg>
-
-        </span>
-
-
-        <span>
-          Global Access
-        </span>
-
-
-      </div>
-
-
-    </section>
-
-
-  </main>
-
-
-  <!-- =========================================
-       ADMIN LOGIN PAGE
-  ========================================== -->
-
-  <main
-    class="login-page"
-    id="loginPage"
-  >
-
-
-    <section class="login-box">
-
-
-      <h2>
-        Welcome Back Admin 👋
-      </h2>
-
-
-      <form
-        id="adminLoginForm"
-      >
-
-
-        <!-- EMAIL -->
-
-        <div class="login-field">
-
-
-          <label
-            for="adminEmail"
-          >
-            Email Address
-          </label>
-
-
-          <input
-            type="email"
-            id="adminEmail"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required
-          >
-
-
-        </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="login-field">
-
-
-          <label
-            for="adminPassword"
-          >
-            Password
-          </label>
-
-
-          <div class="password-wrap">
-
-
-            <input
-              type="password"
-              id="adminPassword"
-              placeholder="Enter your password"
-              autocomplete="current-password"
-              required
-            >
-
-
-            <button
-              type="button"
-              class="show-password"
-              id="showPassword"
-              aria-label="Show password"
-            >
-
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-
-
-                <path
-                  d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-
-
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="3"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-
-
-              </svg>
-
-
-            </button>
-
-
-          </div>
-
-
-        </div>
-
-
-        <!-- LOGIN BUTTON -->
-
-        <button
-          type="submit"
-          class="admin-login-btn"
-        >
-          Login
-        </button>
-
-
-        <div
-          class="login-error"
-          id="loginError"
-        ></div>
-
-
-      </form>
-
-
-    </section>
-
-
-  </main>
-
-
-  <!-- =========================================
-       RESULT PAGE
-  ========================================== -->
-
-  <main class="result-page">
-
-
-    <img
-      class="result-banner"
-      src="/result-banner.jpeg"
-      alt="Licence Verification"
+<!-- =========================
+     MENU BUTTON
+========================= -->
+
+<button
+  type="button"
+  class="menu-btn"
+  id="menuBtn"
+  aria-label="Open menu"
+>
+  ☰
+</button>
+
+
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
+
+
+<!-- =========================
+     SIDE MENU
+========================= -->
+
+<aside
+  class="side-menu"
+  id="sideMenu"
+>
+
+  <div class="menu-header">
+
+    <strong>Menu</strong>
+
+    <button
+      type="button"
+      class="close-menu"
+      id="closeMenu"
     >
+      ×
+    </button>
+
+  </div>
+
+  <div class="menu-line"></div>
 
 
-    <!-- RESULT SEARCH -->
+  <nav class="side-links">
+
+
+    <a href="#" id="homeLink">
+
+      <span class="menu-icon">
+
+        <svg viewBox="0 0 24 24" fill="currentColor">
+
+          <path
+            d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"
+          />
+
+        </svg>
+
+      </span>
+
+      <span>Home</span>
+
+    </a>
+
+
+    <a href="#" id="loginLink">
+
+      <span class="menu-icon">
+
+        <svg viewBox="0 0 24 24" fill="currentColor">
+
+          <circle
+            cx="12"
+            cy="7"
+            r="4"
+          />
+
+          <path
+            d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z"
+          />
+
+        </svg>
+
+      </span>
+
+      <span>Login</span>
+
+    </a>
+
+  </nav>
+
+</aside>
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<main class="home">
+
+  <section class="hero">
+
+
+    <h1>
+      Welcome To Online<br>
+      Verification Services
+    </h1>
+
+
+    <!-- SEARCH -->
 
     <form
-      class="result-search"
-      id="resultSearchForm"
+      class="search"
+      id="searchForm"
     >
 
-
       <input
-        id="resultInput"
+        id="licenceInput"
         type="text"
         inputmode="text"
         autocomplete="off"
@@ -1609,12 +1052,10 @@
         aria-label="Search"
       >
 
-
         <svg
           viewBox="0 0 24 24"
           fill="none"
         >
-
 
           <circle
             cx="11"
@@ -1624,7 +1065,6 @@
             stroke-width="2.5"
           />
 
-
           <path
             d="m16.5 16.5 4 4"
             stroke="currentColor"
@@ -1632,938 +1072,830 @@
             stroke-linecap="round"
           />
 
+        </svg>
+
+      </button>
+
+    </form>
+
+
+    <div
+      class="search-error"
+      id="searchError"
+    ></div>
+
+
+    <!-- SECURE FAST RELIABLE -->
+
+    <div class="features-inline">
+
+      <span>• Secure</span>
+
+      <span>• Fast</span>
+
+      <span>• Reliable</span>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+
+  <section class="features-bottom">
+
+
+    <div class="feature">
+
+      <span class="feature-icon green">
+
+        <svg viewBox="0 0 24 24" fill="currentColor">
+
+          <path
+            d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"
+          />
 
         </svg>
 
+      </span>
 
+      <span class="feature-text">
+        Digital Security
+      </span>
+
+    </div>
+
+
+    <div class="feature">
+
+      <span class="feature-icon red">
+
+        <svg viewBox="0 0 24 24" fill="currentColor">
+
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+
+          <path
+            d="M12 6v6l4 2"
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+
+        </svg>
+
+      </span>
+
+      <span class="feature-text">
+        24/7 Available
+      </span>
+
+    </div>
+
+
+    <div class="feature">
+
+      <span class="feature-icon blue">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+          />
+
+          <path d="M3 12h18"/>
+
+          <path
+            d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21"
+          />
+
+          <path
+            d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"
+          />
+
+        </svg>
+
+      </span>
+
+      <span class="feature-text">
+        Global Access
+      </span>
+
+    </div>
+
+
+  </section>
+
+</main>
+
+
+<!-- =========================
+     LOGIN PAGE
+========================= -->
+
+<main
+  class="login-page"
+  id="loginPage"
+>
+
+  <section class="login-box">
+
+
+    <h2>
+      Welcome Back Admin 👋
+    </h2>
+
+
+    <form id="adminLoginForm">
+
+
+      <div class="login-field">
+
+        <label for="adminEmail">
+          Email Address
+        </label>
+
+        <input
+          type="email"
+          id="adminEmail"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        >
+
+      </div>
+
+
+      <div class="login-field">
+
+        <label for="adminPassword">
+          Password
+        </label>
+
+
+        <div class="password-wrap">
+
+          <input
+            type="password"
+            id="adminPassword"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          >
+
+
+          <button
+            type="button"
+            class="show-password"
+            id="showPassword"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+
+            </svg>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="admin-login-btn"
+      >
+        Login
       </button>
 
 
     </form>
 
+  </section>
 
-    <!-- RESULT -->
+</main>
 
 
-    <article class="result-card">
+<!-- =========================
+     RESULT PAGE
+========================= -->
 
+<main class="result-page">
 
-      <div class="result-head">
 
-        License Number:
+  <img
+    src="/result-banner.jpeg"
+    class="result-banner"
+    alt="Licence Verification"
+  >
 
-        <strong
-          id="licenceNumber"
-        ></strong>
 
-      </div>
+  <form
+    class="result-search"
+    id="resultSearchForm"
+  >
 
+    <input
+      id="resultInput"
+      type="text"
+      placeholder="Type DL/CNIC Number Without Dash"
+    >
 
-      <div class="detail">
 
-        <label>
-          Name
-        </label>
+    <button type="submit">
 
-        <strong
-          id="recordName"
-        ></strong>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+      >
 
-      </div>
+        <circle
+          cx="11"
+          cy="11"
+          r="7"
+          stroke="currentColor"
+          stroke-width="2.5"
+        />
 
+        <path
+          d="m16.5 16.5 4 4"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+        />
 
-      <div class="detail">
+      </svg>
 
-        <label>
-          Father name
-        </label>
+    </button>
 
-        <strong
-          id="fatherName"
-        ></strong>
+  </form>
 
-      </div>
 
+  <article class="result-card">
 
-      <div class="detail">
 
-        <label>
-          Date of Birth
-        </label>
+    <div class="result-head">
 
-        <strong
-          id="dateOfBirth"
-        ></strong>
+      License Number:
 
-      </div>
+      <span id="licenceNumber"></span>
 
+    </div>
 
-      <div class="detail">
 
-        <label>
-          First Issue
-        </label>
+    <div class="detail">
 
-        <strong
-          id="firstIssue"
-        ></strong>
+      <label>Name</label>
 
-      </div>
+      <strong id="recordName"></strong>
 
+    </div>
 
-      <div class="detail">
 
-        <label>
-          Issue / Renewal
-        </label>
+    <div class="detail">
 
-        <strong
-          id="issueRenewal"
-        ></strong>
+      <label>Father name</label>
 
-      </div>
+      <strong id="fatherName"></strong>
 
+    </div>
 
-      <div class="detail">
 
-        <label>
-          Validity
-        </label>
+    <div class="detail">
 
-        <strong
-          id="validUntil"
-        ></strong>
+      <label>Date of Birth</label>
 
-      </div>
+      <strong id="dateOfBirth"></strong>
 
+    </div>
 
-      <div class="detail">
 
-        <label>
-          Category
-        </label>
+    <div class="detail">
 
-        <strong
-          id="category"
-        ></strong>
+      <label>First Issue</label>
 
-      </div>
+      <strong id="firstIssue"></strong>
 
+    </div>
 
-    </article>
 
+    <div class="detail">
 
-  </main>
+      <label>Issue / Renewal</label>
 
+      <strong id="issueRenewal"></strong>
 
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================== -->
+    </div>
 
-  <script>
 
+    <div class="detail">
 
-    /* =========================================
-       RECORDS
-    ========================================== */
+      <label>Validity</label>
 
-    const records = {
+      <strong id="validUntil"></strong>
 
+    </div>
 
-      "UP671092871201": {
 
-        licence:
-          "UP671092871201",
+    <div class="detail">
 
-        name:
-          "Bhupinder Kumar",
+      <label>Category</label>
 
-        father:
-          "Puran Chand",
+      <strong id="category"></strong>
 
-        dateOfBirth:
-          "28 Sept 1998",
+    </div>
+
+
+  </article>
 
-        firstIssue:
-          "15 Apr 2019",
+</main>
+
+
+<script>
+
+/* =========================
+   RECORDS
+========================= */
+
+const records = {
+
+  "UP671092871201":{
+    licence:"UP671092871201",
+    name:"Bhupinder Kumar",
+    father:"Puran Chand",
+    dateOfBirth:"28 Sept 1998",
+    firstIssue:"15 Apr 2019",
+    issueRenewal:"15 Apr 2019",
+    category:"M.CYCLE+M.CAR/JEEP ONLY",
+    expiry:"14 Apr 2028"
+  },
+
+  "UP9081726354":{
+    licence:"UP9081726354",
+    name:"Aamir Shah",
+    father:"Naeem Shah",
+    dateOfBirth:"12 June 1994",
+    firstIssue:"20 August 2020",
+    issueRenewal:"20 August 2025",
+    category:"LMV / MCWG",
+    expiry:"19 August 2030"
+  },
 
-        issueRenewal:
-          "15 Apr 2019",
+  "UP1831831833":{
+    licence:"UP1831831833",
+    name:"Arshad",
+    father:"Gul Raham",
+    dateOfBirth:"10 October 2001",
+    firstIssue:"11/2000",
+    issueRenewal:"11/2000",
+    category:"Car",
+    expiry:"26 August 2728"
+  },
 
-        category:
-          "M.CYCLE+M.CAR/JEEP ONLY",
+  "UP1831831834":{
+    licence:"UP1831831834",
+    name:"samood",
+    father:"Gul Raham",
+    dateOfBirth:"10 October 2001",
+    firstIssue:"11/2000",
+    issueRenewal:"11/2000",
+    category:"Car",
+    expiry:"26 August 2728"
+  },
 
-        expiry:
-          "14 Apr 2028"
+  "UP1831831835":{
+    licence:"UP1831831835",
+    name:"samood",
+    father:"Gul Raham",
+    dateOfBirth:"10 October 2001",
+    firstIssue:"11/2000",
+    issueRenewal:"11/2000",
+    category:"Car",
+    expiry:"26 August 2728"
+  },
 
-      },
+  "UP1831831838":{
+    licence:"UP1831831838",
+    name:"adil",
+    father:"adil Raham",
+    dateOfBirth:"10 October 2001",
+    firstIssue:"11/2000",
+    issueRenewal:"11/2000",
+    category:"Car",
+    expiry:"26 August 2728"
+  },
 
+  "UP1831831839":{
+    licence:"UP1831831839",
+    name:"zeeshan ullah",
+    father:"Zer Ali Khan",
+    dateOfBirth:"15 june 2006",
+    firstIssue:"11/2000",
+    issueRenewal:"11/2000",
+    category:"Car",
+    expiry:"26 August 2728"
+  },
 
-      "UP9081726354": {
+  "UP10676109287":{
+    licence:"UP10676109287",
+    name:"Harsh Kumar",
+    father:"Yamuna Dass",
+    dateOfBirth:"7 Octuber 1984",
+    firstIssue:"16/09/2018",
+    issueRenewal:"16/09/2018",
+    category:"Car",
+    expiry:"15 September 2028"
+  },
 
-        licence:
-          "UP9081726354",
+  "UP10676109288":{
+    licence:"UP10676109288",
+    name:"Wajid Kumar",
+    father:"Noor Alam Kumar",
+    dateOfBirth:"7 Octuber 1984",
+    firstIssue:"16/09/2018",
+    issueRenewal:"16/09/2018",
+    category:"Car",
+    expiry:"15 September 2028"
+  }
 
-        name:
-          "Aamir Shah",
+};
 
-        father:
-          "Naeem Shah",
 
-        dateOfBirth:
-          "12 June 1994",
+/* =========================
+   ELEMENTS
+========================= */
 
-        firstIssue:
-          "20 August 2020",
+const menuBtn =
+  document.getElementById("menuBtn");
 
-        issueRenewal:
-          "20 August 2025",
+const closeMenu =
+  document.getElementById("closeMenu");
 
-        category:
-          "LMV / MCWG",
+const menuOverlay =
+  document.getElementById("menuOverlay");
 
-        expiry:
-          "19 August 2030"
+const homeLink =
+  document.getElementById("homeLink");
 
-      },
+const loginLink =
+  document.getElementById("loginLink");
 
+const searchForm =
+  document.getElementById("searchForm");
 
-      "UP1831831833": {
+const licenceInput =
+  document.getElementById("licenceInput");
 
-        licence:
-          "UP1831831833",
+const searchError =
+  document.getElementById("searchError");
 
-        name:
-          "Arshad",
+const resultSearchForm =
+  document.getElementById("resultSearchForm");
 
-        father:
-          "Gul Raham",
+const resultInput =
+  document.getElementById("resultInput");
 
-        dateOfBirth:
-          "10 October 2001",
+const adminPassword =
+  document.getElementById("adminPassword");
 
-        firstIssue:
-          "11/2000",
+const showPassword =
+  document.getElementById("showPassword");
 
-        issueRenewal:
-          "11/2000",
+const adminLoginForm =
+  document.getElementById("adminLoginForm");
 
-        category:
-          "Car",
 
-        expiry:
-          "26 August 2728"
+/* =========================
+   MENU
+========================= */
 
-      },
+menuBtn.addEventListener("click",function(){
 
+  document.body.classList.add("menu-open");
 
-      "UP1831831834": {
+});
 
-        licence:
-          "UP1831831834",
 
-        name:
-          "samood",
+closeMenu.addEventListener("click",function(){
 
-        father:
-          "Gul Raham",
+  document.body.classList.remove("menu-open");
 
-        dateOfBirth:
-          "10 October 2001",
+});
 
-        firstIssue:
-          "11/2000",
 
-        issueRenewal:
-          "11/2000",
+menuOverlay.addEventListener("click",function(){
 
-        category:
-          "Car",
+  document.body.classList.remove("menu-open");
 
-        expiry:
-          "26 August 2728"
+});
 
-      },
 
+/* =========================
+   HOME
+========================= */
 
-      "UP1831831835": {
+homeLink.addEventListener("click",function(event){
 
-        licence:
-          "UP1831831835",
+  event.preventDefault();
 
-        name:
-          "samood",
+  document.body.classList.remove("menu-open");
 
-        father:
-          "Gul Raham",
+  document.body.classList.remove("login-view");
 
-        dateOfBirth:
-          "10 October 2001",
+  document.body.classList.remove("results-view");
 
-        firstIssue:
-          "11/2000",
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-        issueRenewal:
-          "11/2000",
+});
 
-        category:
-          "Car",
 
-        expiry:
-          "26 August 2728"
+/* =========================
+   LOGIN
+========================= */
 
-      },
+loginLink.addEventListener("click",function(event){
 
+  event.preventDefault();
 
-      "UP1831831838": {
+  document.body.classList.remove("menu-open");
 
-        licence:
-          "UP1831831838",
+  document.body.classList.remove("results-view");
 
-        name:
-          "adil",
+  document.body.classList.add("login-view");
 
-        father:
-          "adil Raham",
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-        dateOfBirth:
-          "10 October 2001",
+});
 
-        firstIssue:
-          "11/2000",
 
-        issueRenewal:
-          "11/2000",
+/* =========================
+   PASSWORD EYE
+========================= */
 
-        category:
-          "Car",
+showPassword.addEventListener("click",function(){
 
-        expiry:
-          "26 August 2728"
+  if(adminPassword.type === "password"){
 
-      },
+    adminPassword.type = "text";
 
+  }else{
 
-      "UP1831831839": {
+    adminPassword.type = "password";
 
-        licence:
-          "UP1831831839",
+  }
 
-        name:
-          "zeeshan ullah",
+});
 
-        father:
-          "Zer Ali Khan",
 
-        dateOfBirth:
-          "15 june 2006",
+/* Login UI only.
+   Connect this to your server/Supabase Auth.
+*/
 
-        firstIssue:
-          "11/2000",
+adminLoginForm.addEventListener("submit",function(event){
 
-        issueRenewal:
-          "11/2000",
+  event.preventDefault();
 
-        category:
-          "Car",
+});
 
-        expiry:
-          "26 August 2728"
 
-      },
+/* =========================
+   CLEAN NUMBER
+========================= */
 
+function cleanNumber(value){
 
-      "UP10676109287": {
+  return value
+    .trim()
+    .replace(/[\s-]/g,"")
+    .toUpperCase();
 
-        licence:
-          "UP10676109287",
+}
 
-        name:
-          "Harsh Kumar",
 
-        father:
-          "Yamuna Dass",
+/* =========================
+   SEARCH
+========================= */
 
-        dateOfBirth:
-          "7 Octuber 1984",
+function searchLicence(value){
 
-        firstIssue:
-          "16/09/2018",
+  const key =
+    cleanNumber(value);
 
-        issueRenewal:
-          "16/09/2018",
+  searchError.classList.remove("show");
 
-        category:
-          "Car",
 
-        expiry:
-          "15 September 2028"
+  if(!key){
 
-      },
+    searchError.textContent =
+      "Please enter a licence or CNIC number.";
 
+    searchError.classList.add("show");
 
-      "UP10676109288": {
+    return;
 
-        licence:
-          "UP10676109288",
+  }
 
-        name:
-          "Wajid Kumar",
 
-        father:
-          "Noor Alam Kumar",
+  const record =
+    records[key];
 
-        dateOfBirth:
-          "7 Octuber 1984",
 
-        firstIssue:
-          "16/09/2018",
+  if(!record){
 
-        issueRenewal:
-          "16/09/2018",
+    searchError.textContent =
+      "Record not found.";
 
-        category:
-          "Car",
+    searchError.classList.add("show");
 
-        expiry:
-          "15 September 2028"
+    return;
 
-      }
+  }
 
 
-    };
+  document.getElementById(
+    "licenceNumber"
+  ).textContent =
+    record.licence;
 
 
-    /* =========================================
-       ELEMENTS
-    ========================================== */
+  document.getElementById(
+    "recordName"
+  ).textContent =
+    record.name;
 
 
-    const menuBtn =
-      document.getElementById(
-        "menuBtn"
-      );
+  document.getElementById(
+    "fatherName"
+  ).textContent =
+    record.father;
 
 
-    const closeMenu =
-      document.getElementById(
-        "closeMenu"
-      );
+  document.getElementById(
+    "dateOfBirth"
+  ).textContent =
+    record.dateOfBirth;
 
 
-    const menuOverlay =
-      document.getElementById(
-        "menuOverlay"
-      );
+  document.getElementById(
+    "firstIssue"
+  ).textContent =
+    record.firstIssue;
 
 
-    const homeLink =
-      document.getElementById(
-        "homeLink"
-      );
+  document.getElementById(
+    "issueRenewal"
+  ).textContent =
+    record.issueRenewal;
 
 
-    const loginLink =
-      document.getElementById(
-        "loginLink"
-      );
+  document.getElementById(
+    "validUntil"
+  ).textContent =
+    record.expiry;
 
 
-    const searchForm =
-      document.getElementById(
-        "searchForm"
-      );
+  document.getElementById(
+    "category"
+  ).textContent =
+    record.category;
 
 
-    const licenceInput =
-      document.getElementById(
-        "licenceInput"
-      );
+  resultInput.value =
+    record.licence;
 
 
-    const searchError =
-      document.getElementById(
-        "searchError"
-      );
+  document.body.classList.remove(
+    "login-view"
+  );
 
 
-    const resultSearchForm =
-      document.getElementById(
-        "resultSearchForm"
-      );
+  document.body.classList.remove(
+    "menu-open"
+  );
 
 
-    const resultInput =
-      document.getElementById(
-        "resultInput"
-      );
+  document.body.classList.add(
+    "results-view"
+  );
 
 
-    const adminPassword =
-      document.getElementById(
-        "adminPassword"
-      );
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
+}
 
-    const showPassword =
-      document.getElementById(
-        "showPassword"
-      );
 
+/* HOME SEARCH */
 
-    const adminLoginForm =
-      document.getElementById(
-        "adminLoginForm"
-      );
+searchForm.addEventListener(
+  "submit",
+  function(event){
 
+    event.preventDefault();
 
-    /* =========================================
-       MENU OPEN
-    ========================================== */
-
-
-    menuBtn.addEventListener(
-      "click",
-      function () {
-
-        document.body.classList.add(
-          "menu-open"
-        );
-
-      }
+    searchLicence(
+      licenceInput.value
     );
 
+  }
+);
 
-    /* =========================================
-       MENU CLOSE
-    ========================================== */
 
+/* RESULT SEARCH */
 
-    closeMenu.addEventListener(
-      "click",
-      function () {
+resultSearchForm.addEventListener(
+  "submit",
+  function(event){
 
-        document.body.classList.remove(
-          "menu-open"
-        );
+    event.preventDefault();
 
-      }
-    );
+    const key =
+      cleanNumber(
+        resultInput.value
+      );
 
 
-    menuOverlay.addEventListener(
-      "click",
-      function () {
+    if(!records[key]){
 
-        document.body.classList.remove(
-          "menu-open"
-        );
+      alert("Record not found.");
 
-      }
-    );
-
-
-    /* =========================================
-       HOME
-    ========================================== */
-
-
-    homeLink.addEventListener(
-      "click",
-      function (event) {
-
-        event.preventDefault();
-
-
-        document.body.classList.remove(
-          "menu-open"
-        );
-
-
-        document.body.classList.remove(
-          "login-view"
-        );
-
-
-        document.body.classList.remove(
-          "results-view"
-        );
-
-
-        searchError.classList.remove(
-          "show"
-        );
-
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-      }
-    );
-
-
-    /* =========================================
-       LOGIN LINK
-       LOGIN CLICK -> FORM OPEN
-    ========================================== */
-
-
-    loginLink.addEventListener(
-      "click",
-      function (event) {
-
-        event.preventDefault();
-
-
-        /* Close side menu */
-
-        document.body.classList.remove(
-          "menu-open"
-        );
-
-
-        /* Close result page */
-
-        document.body.classList.remove(
-          "results-view"
-        );
-
-
-        /* OPEN LOGIN PAGE */
-
-        document.body.classList.add(
-          "login-view"
-        );
-
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-      }
-    );
-
-
-    /* =========================================
-       SHOW / HIDE PASSWORD
-    ========================================== */
-
-
-    showPassword.addEventListener(
-      "click",
-      function () {
-
-
-        if (
-          adminPassword.type
-          ===
-          "password"
-        ) {
-
-          adminPassword.type =
-            "text";
-
-        }
-
-        else {
-
-          adminPassword.type =
-            "password";
-
-        }
-
-
-      }
-    );
-
-
-    /* =========================================
-       ADMIN LOGIN SUBMIT
-    ========================================== */
-
-
-    adminLoginForm.addEventListener(
-      "submit",
-      function (event) {
-
-        event.preventDefault();
-
-
-        /*
-          Connect Supabase Auth here.
-
-          Do NOT put your admin password
-          directly inside this HTML file.
-        */
-
-
-      }
-    );
-
-
-    /* =========================================
-       CLEAN LICENCE NUMBER
-    ========================================== */
-
-
-    function cleanNumber(value) {
-
-      return value
-        .trim()
-        .replace(
-          /[\s-]/g,
-          ""
-        )
-        .toUpperCase();
+      return;
 
     }
 
 
-    /* =========================================
-       SEARCH LICENCE
-    ========================================== */
-
-
-    function searchLicence(value) {
-
-
-      const key =
-        cleanNumber(value);
-
-
-      searchError.classList.remove(
-        "show"
-      );
-
-
-      if (!key) {
-
-
-        searchError.textContent =
-          "Please enter a licence or CNIC number.";
-
-
-        searchError.classList.add(
-          "show"
-        );
-
-
-        return;
-
-      }
-
-
-      const record =
-        records[key];
-
-
-      if (!record) {
-
-
-        searchError.textContent =
-          "Record not found.";
-
-
-        searchError.classList.add(
-          "show"
-        );
-
-
-        return;
-
-      }
-
-
-      /* ADD DATA TO RESULT */
-
-
-      document.getElementById(
-        "licenceNumber"
-      ).textContent =
-        record.licence;
-
-
-      document.getElementById(
-        "recordName"
-      ).textContent =
-        record.name;
-
-
-      document.getElementById(
-        "fatherName"
-      ).textContent =
-        record.father;
-
-
-      document.getElementById(
-        "dateOfBirth"
-      ).textContent =
-        record.dateOfBirth;
-
-
-      document.getElementById(
-        "firstIssue"
-      ).textContent =
-        record.firstIssue;
-
-
-      document.getElementById(
-        "issueRenewal"
-      ).textContent =
-        record.issueRenewal;
-
-
-      document.getElementById(
-        "validUntil"
-      ).textContent =
-        record.expiry;
-
-
-      document.getElementById(
-        "category"
-      ).textContent =
-        record.category;
-
-
-      resultInput.value =
-        record.licence;
-
-
-      /* CLOSE LOGIN */
-
-      document.body.classList.remove(
-        "login-view"
-      );
-
-
-      /* CLOSE MENU */
-
-      document.body.classList.remove(
-        "menu-open"
-      );
-
-
-      /* SHOW RESULT */
-
-      document.body.classList.add(
-        "results-view"
-      );
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-
-    }
-
-
-    /* =========================================
-       HOME SEARCH
-    ========================================== */
-
-
-    searchForm.addEventListener(
-      "submit",
-      function (event) {
-
-
-        event.preventDefault();
-
-
-        searchLicence(
-          licenceInput.value
-        );
-
-
-      }
+    searchLicence(
+      resultInput.value
     );
 
-
-    /* =========================================
-       RESULT SEARCH
-    ========================================== */
+  }
+);
 
 
-    resultSearchForm.addEventListener(
-      "submit",
-      function (event) {
+/* =========================
+   QR / URL SEARCH
+========================= */
+
+const fromUrl =
+  new URLSearchParams(
+    window.location.search
+  ).get("licence");
 
 
-        event.preventDefault();
+if(fromUrl){
 
+  licenceInput.value =
+    fromUrl;
 
-        const key =
-          cleanNumber(
-            resultInput.value
-          );
+  searchLicence(
+    fromUrl
+  );
 
+  history.replaceState(
+    null,
+    "",
+    window.location.pathname
+  );
 
-        if (!records[key]) {
+}
 
-          alert(
-            "Record not found."
-          );
-
-          return;
-
-        }
-
-
-        searchLicence(
-          resultInput.value
-        );
-
-
-      }
-    );
-
-
-    /* =========================================
-       QR / URL SUPPORT
-
-       Example:
-       ?licence=UP1831831835
-    ========================================== */
-
-
-    const fromUrl =
-      new URLSearchParams(
-        window.location.search
-      ).get(
-        "licence"
-      );
-
-
-    if (fromUrl) {
-
-
-      licenceInput.value =
-        fromUrl;
-
-
-      searchLicence(
-        fromUrl
-      );
-
-
-      history.replaceState(
-        null,
-        "",
-        window.location.pathname
-      );
-
-
-    }
-
-
-  </script>
-
+</script>
 
 </body>
-
 </html>
