@@ -11,6 +11,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -21,318 +25,814 @@
     body {
       min-height: 100vh;
       background:
-        linear-gradient(rgba(225, 245, 238, 0.82), rgba(225, 245, 238, 0.82)),
-        url("/green-texture.webp") center/cover fixed no-repeat;
+        linear-gradient(
+          rgba(225, 245, 238, 0.82),
+          rgba(225, 245, 238, 0.82)
+        ),
+        url("/green-texture.webp") center / cover fixed no-repeat;
+
       color: #111827;
     }
 
-    /* =========================
-       HOME PAGE
-    ========================== */
-
-    .home {
-      min-height: 100vh;
-      padding: 25px 20px 60px;
+    button,
+    input {
+      font: inherit;
     }
 
-    .menu {
-      display: flex;
-      justify-content: flex-end;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .menu-button {
-      border: 0;
-      background: transparent;
-      color: #111;
-      font-size: 35px;
-      font-weight: bold;
+    button {
       cursor: pointer;
     }
 
+
+    /* =====================================
+       MENU BUTTON
+    ===================================== */
+
+    .menu-btn {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+
+      z-index: 100;
+
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+      background: transparent;
+
+      color: #111;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+
+    /* =====================================
+       MENU OVERLAY
+    ===================================== */
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+
+      z-index: 998;
+
+      background: rgba(0, 0, 0, 0.35);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+    }
+
+
+    /* =====================================
+       SIDE MENU
+    ===================================== */
+
+    .side-menu {
+      position: fixed;
+
+      top: 0;
+      right: 0;
+
+      z-index: 999;
+
+      width: min(67vw, 440px);
+      height: 100vh;
+
+      padding: 45px 44px;
+
+      background: #ffffff;
+
+      transform: translateX(100%);
+
+      transition: transform .28s ease;
+
+      box-shadow: -5px 0 20px rgba(0,0,0,.08);
+    }
+
+    body.menu-open .side-menu {
+      transform: translateX(0);
+    }
+
+    body.menu-open .menu-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      color: #111;
+
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+
+    .close-menu {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      padding: 0;
+
+      border: 0;
+      background: transparent;
+
+      color: #111;
+
+      font-size: 38px;
+      font-weight: 700;
+
+      line-height: 1;
+    }
+
+
+    .menu-line {
+      height: 1px;
+
+      margin-top: 12px;
+
+      background: #222;
+    }
+
+
+    .side-links {
+      padding-top: 25px;
+    }
+
+
+    .side-links a {
+      display: flex;
+      align-items: center;
+
+      gap: 22px;
+
+      padding: 19px 12px;
+
+      color: #172132;
+
+      text-decoration: none;
+
+      font-size: 25px;
+      font-weight: 400;
+
+      border-radius: 8px;
+    }
+
+
+    .side-links a:hover {
+      background: #f5f6f8;
+    }
+
+
+    .menu-icon {
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      color: #172132;
+    }
+
+
+    .menu-icon svg {
+      width: 27px;
+      height: 27px;
+    }
+
+
+    /* =====================================
+       HOME PAGE
+    ===================================== */
+
+    .home {
+      min-height: 100vh;
+
+      padding: 25px 20px 60px;
+    }
+
+
     .hero {
       max-width: 700px;
+
       margin: 250px auto 0;
+
       text-align: center;
     }
 
+
     h1 {
       margin: 0 0 45px;
+
       color: #164bc5;
+
       font-size: clamp(42px, 7vw, 68px);
+
       line-height: 1.1;
+
       font-weight: 800;
     }
 
+
+    /* =====================================
+       SEARCH BAR
+    ===================================== */
+
     .search {
       width: 100%;
+
       display: grid;
+
       grid-template-columns: 1fr 85px;
+
       overflow: hidden;
+
       border-radius: 12px;
+
       background: white;
+
       box-shadow: 0 5px 12px rgba(0,0,0,.15);
     }
 
+
     .search input {
       width: 100%;
+
       height: 72px;
+
       padding: 0 22px;
+
       border: 0;
+
       outline: 0;
+
       background: white;
+
       color: #222;
+
       font-size: 22px;
     }
+
 
     .search input::placeholder {
       color: #9ca3af;
     }
 
+
     .search button {
       height: 72px;
+
       border: 0;
+
       background: #ef0015;
+
       color: white;
-      cursor: pointer;
+
       display: grid;
+
       place-items: center;
     }
+
+
+    .search button:hover {
+      background: #d90013;
+    }
+
 
     .search button svg {
       width: 34px;
       height: 34px;
     }
 
+
+    /* =====================================
+       SECURE FAST RELIABLE
+    ===================================== */
+
     .features-inline {
       display: flex;
+
       justify-content: center;
+
       gap: 42px;
+
       flex-wrap: wrap;
+
       margin-top: 55px;
-      color: white;
+
+      color: #111827;
+
       font-size: 30px;
+
       font-weight: 800;
-      text-shadow: 0 2px 5px rgba(0,0,0,.12);
+
+      text-shadow: none;
     }
+
+
+    /* =====================================
+       BOTTOM FEATURES
+    ===================================== */
 
     .features-bottom {
       width: fit-content;
+
       margin: 150px auto 0;
+
       display: grid;
+
       gap: 42px;
     }
 
+
     .feature {
       display: flex;
+
       align-items: center;
+
       gap: 20px;
+
+      color: #111827;
+
       font-size: 30px;
+
       font-weight: 800;
     }
+
 
     .feature-icon {
       width: 52px;
       height: 52px;
+
       display: grid;
+
       place-items: center;
-      font-size: 38px;
     }
 
-    .green { color: #00ad56; }
-    .red { color: #ef0015; }
-    .blue { color: #1473ed; }
+
+    .feature-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+
+
+    .green {
+      color: #00ad56;
+    }
+
+
+    .red {
+      color: #ef0015;
+    }
+
+
+    .blue {
+      color: #1473ed;
+    }
+
+
+    /* =====================================
+       ERROR
+    ===================================== */
 
     .error {
       display: none;
+
       max-width: 700px;
+
       margin: 20px auto 0;
+
       padding: 14px 18px;
+
       border-radius: 8px;
+
       background: #ffe7e9;
+
       color: #a31522;
+
       text-align: center;
+
       font-weight: 600;
     }
+
 
     .error.show {
       display: block;
     }
 
-    /* =========================
+
+    /* =====================================
        RESULT PAGE
-    ========================== */
+    ===================================== */
 
     .result-page {
       display: none;
+
       width: min(100% - 24px, 660px);
+
       margin: auto;
+
       padding: 12px 0 35px;
     }
+
 
     body.results-view .home {
       display: none;
     }
 
+
     body.results-view .result-page {
       display: block;
     }
 
+
+    body.results-view .menu-btn {
+      display: none;
+    }
+
+
     .result-banner {
       display: block;
+
       width: 100%;
+
       height: auto;
+
       margin-bottom: 18px;
     }
 
+
+    /* Result search */
+
     .result-search {
       display: grid;
+
       grid-template-columns: 1fr 72px;
+
       overflow: hidden;
+
       border-radius: 10px;
+
+      background: white;
+
       box-shadow: 0 5px 12px rgba(0,0,0,.15);
+
       margin-bottom: 22px;
     }
 
+
     .result-search input {
+      width: 100%;
+
       height: 56px;
+
       border: 0;
+
       outline: 0;
+
       padding: 0 16px;
+
       font-size: 17px;
     }
 
+
     .result-search button {
       border: 0;
+
       background: #e60012;
+
       color: white;
+
       display: grid;
+
       place-items: center;
-      cursor: pointer;
     }
+
 
     .result-search svg {
       width: 28px;
       height: 28px;
     }
 
+
+    /* =====================================
+       RESULT CARD
+    ===================================== */
+
     .result-card {
       overflow: hidden;
+
       border-radius: 10px;
+
       background: white;
+
       box-shadow: 0 5px 12px rgba(0,0,0,.15);
     }
 
+
     .result-head {
       padding: 17px;
+
       background: #e5e7eb;
+
+      color: #111;
+
       text-align: center;
+
       font-size: 17px;
     }
+
 
     .detail {
       border-bottom: 1px solid #111;
     }
 
+
     .detail:last-child {
       border-bottom: 0;
     }
+
 
     .detail:nth-child(odd) {
       background: #f3f4f6;
     }
 
+
     .detail label,
     .detail strong {
       display: block;
+
       padding: 13px 16px;
+
+      color: #111;
+
       font-size: 16px;
+
       font-weight: 400;
     }
+
 
     .detail label {
       border-bottom: 1px solid #d1d5db;
     }
 
-    /* =========================
+
+    /* =====================================
        MOBILE
-    ========================== */
+    ===================================== */
 
     @media (max-width: 700px) {
+
       .hero {
         margin-top: 160px;
       }
 
+
       h1 {
-        font-size: 43px;
         margin-bottom: 35px;
+
+        font-size: 43px;
       }
+
 
       .search {
         grid-template-columns: 1fr 68px;
       }
+
 
       .search input,
       .search button {
         height: 62px;
       }
 
+
       .search input {
         font-size: 17px;
       }
 
+
       .features-inline {
         gap: 18px;
-        font-size: 20px;
+
         margin-top: 40px;
+
+        font-size: 20px;
       }
+
 
       .features-bottom {
         margin-top: 100px;
+
         gap: 30px;
       }
+
 
       .feature {
         font-size: 22px;
       }
 
+
       .feature-icon {
         width: 42px;
         height: 42px;
-        font-size: 30px;
       }
+
+
+      .feature-icon svg {
+        width: 40px;
+        height: 40px;
+      }
+
+
+      .side-menu {
+        width: 67%;
+
+        padding: 35px 28px;
+      }
+
+
+      .menu-header {
+        font-size: 22px;
+      }
+
+
+      .side-links a {
+        gap: 18px;
+
+        font-size: 21px;
+      }
+
+
+      .menu-btn {
+        top: 15px;
+
+        right: 16px;
+      }
+
     }
 
+
     @media (max-width: 430px) {
+
       .hero {
         margin-top: 125px;
       }
+
 
       h1 {
         font-size: 37px;
       }
 
+
       .features-inline {
-        font-size: 17px;
         gap: 14px;
+
+        font-size: 17px;
       }
+
 
       .feature {
         font-size: 20px;
       }
+
+
+      .side-menu {
+        width: 67%;
+
+        padding: 28px 22px;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- HOME PAGE -->
-  <main class="home">
 
-    <div class="menu">
-      <button class="menu-button" aria-label="Menu">☰</button>
+  <!-- =====================================
+       MENU BUTTON
+  ====================================== -->
+
+  <button
+    class="menu-btn"
+    id="menuBtn"
+    aria-label="Open menu"
+  >
+    ☰
+  </button>
+
+
+  <!-- DARK OVERLAY -->
+
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+  ></div>
+
+
+  <!-- =====================================
+       SIDE MENU
+  ====================================== -->
+
+  <aside
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="menu-header">
+
+      <strong>Menu</strong>
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+        aria-label="Close menu"
+      >
+        ×
+      </button>
+
     </div>
+
+
+    <div class="menu-line"></div>
+
+
+    <nav class="side-links">
+
+
+      <!-- HOME -->
+
+      <a
+        href="#"
+        id="homeLink"
+      >
+
+        <span class="menu-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"/>
+          </svg>
+
+        </span>
+
+        <span>Home</span>
+
+      </a>
+
+
+      <!-- LOGIN -->
+
+      <a href="#login">
+
+        <span class="menu-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="7" r="4"/>
+            <path d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z"/>
+          </svg>
+
+        </span>
+
+        <span>Login</span>
+
+      </a>
+
+
+    </nav>
+
+  </aside>
+
+
+  <!-- =====================================
+       HOME PAGE
+  ====================================== -->
+
+  <main class="home">
 
     <section class="hero">
 
@@ -341,7 +841,13 @@
         Verification Services
       </h1>
 
-      <form class="search" id="search-form">
+
+      <!-- SEARCH -->
+
+      <form
+        class="search"
+        id="search-form"
+      >
 
         <input
           id="licence-input"
@@ -352,8 +858,17 @@
           aria-label="Licence or CNIC number"
         >
 
-        <button type="submit" aria-label="Search">
-          <svg viewBox="0 0 24 24" fill="none">
+
+        <button
+          type="submit"
+          aria-label="Search"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+
             <circle
               cx="11"
               cy="11"
@@ -361,42 +876,135 @@
               stroke="currentColor"
               stroke-width="2.5"
             />
+
             <path
               d="m16.5 16.5 4 4"
               stroke="currentColor"
               stroke-width="2.5"
               stroke-linecap="round"
             />
+
           </svg>
+
         </button>
 
       </form>
 
-      <div id="error-message" class="error"></div>
+
+      <div
+        id="error-message"
+        class="error"
+      ></div>
+
+
+      <!-- SECURE / FAST / RELIABLE -->
 
       <div class="features-inline">
+
         <span>• Secure</span>
+
         <span>• Fast</span>
+
         <span>• Reliable</span>
+
       </div>
 
     </section>
 
+
+    <!-- =====================================
+         BOTTOM FEATURES
+    ====================================== -->
+
     <section class="features-bottom">
 
+
+      <!-- DIGITAL SECURITY -->
+
       <div class="feature">
-        <span class="feature-icon green">🛡</span>
+
+        <span class="feature-icon green">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"/>
+          </svg>
+
+        </span>
+
         <span>Digital Security</span>
+
       </div>
 
+
+      <!-- 24/7 -->
+
       <div class="feature">
-        <span class="feature-icon red">●</span>
+
+        <span class="feature-icon red">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+            />
+
+            <path
+              d="M12 6v6l4 2"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+          </svg>
+
+        </span>
+
         <span>24/7 Available</span>
+
       </div>
 
+
+      <!-- GLOBAL ACCESS -->
+
       <div class="feature">
-        <span class="feature-icon blue">🌐</span>
+
+        <span class="feature-icon blue">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <circle
+              cx="12"
+              cy="12"
+              r="9"
+            />
+
+            <path d="M3 12h18"/>
+
+            <path d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21"/>
+
+            <path d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"/>
+
+          </svg>
+
+        </span>
+
         <span>Global Access</span>
+
       </div>
 
     </section>
@@ -404,8 +1012,12 @@
   </main>
 
 
-  <!-- RESULT PAGE -->
+  <!-- =====================================
+       RESULT PAGE
+  ====================================== -->
+
   <main class="result-page">
+
 
     <img
       class="result-banner"
@@ -413,7 +1025,11 @@
       alt="Licence Verification"
     >
 
-    <form class="result-search" id="result-search-form">
+
+    <form
+      class="result-search"
+      id="result-search-form"
+    >
 
       <input
         id="result-input"
@@ -423,8 +1039,17 @@
         placeholder="Type DL/CNIC Number Without Dash"
       >
 
-      <button type="submit" aria-label="Search">
-        <svg viewBox="0 0 24 24" fill="none">
+
+      <button
+        type="submit"
+        aria-label="Search"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+
           <circle
             cx="11"
             cy="11"
@@ -432,58 +1057,74 @@
             stroke="currentColor"
             stroke-width="2.5"
           />
+
           <path
             d="m16.5 16.5 4 4"
             stroke="currentColor"
             stroke-width="2.5"
             stroke-linecap="round"
           />
+
         </svg>
+
       </button>
 
     </form>
 
+
     <article class="result-card">
 
+
       <div class="result-head">
+
         License Number:
+
         <strong id="licence-number"></strong>
+
       </div>
+
 
       <div class="detail">
         <label>Name</label>
         <strong id="name"></strong>
       </div>
 
+
       <div class="detail">
         <label>Father name</label>
         <strong id="father-name"></strong>
       </div>
+
 
       <div class="detail">
         <label>Date of Birth</label>
         <strong id="date-of-birth"></strong>
       </div>
 
+
       <div class="detail">
         <label>First Issue</label>
         <strong id="first-issue"></strong>
       </div>
+
 
       <div class="detail">
         <label>Issue / Renewal</label>
         <strong id="issue-renewal"></strong>
       </div>
 
+
       <div class="detail">
         <label>Validity</label>
         <strong id="valid-until"></strong>
       </div>
 
+
       <div class="detail">
         <label>Category</label>
         <strong id="category"></strong>
       </div>
+
 
     </article>
 
@@ -492,130 +1133,231 @@
 
   <script>
 
-    /* =========================
-       YOUR RECORDS
-    ========================== */
+    /* =====================================
+       RECORDS
+    ====================================== */
 
     const records = {
 
+
       "UP671092871201": {
+
         licence: "UP671092871201",
+
         name: "Bhupinder Kumar",
+
         father: "Puran Chand",
+
         dateOfBirth: "28 Sept 1998",
+
         firstIssue: "15 Apr 2019",
+
         issueRenewal: "15 Apr 2019",
+
         category: "M.CYCLE+M.CAR/JEEP ONLY",
+
         expiry: "14 Apr 2028"
+
       },
+
 
       "UP9081726354": {
+
         licence: "UP9081726354",
+
         name: "Aamir Shah",
+
         father: "Naeem Shah",
+
         dateOfBirth: "12 June 1994",
+
         firstIssue: "20 August 2020",
+
         issueRenewal: "20 August 2025",
+
         category: "LMV / MCWG",
+
         expiry: "19 August 2030"
+
       },
+
 
       "UP1831831833": {
+
         licence: "UP1831831833",
+
         name: "Arshad",
+
         father: "Gul Raham",
+
         dateOfBirth: "10 October 2001",
+
         firstIssue: "11/2000",
+
         issueRenewal: "11/2000",
+
         category: "Car",
+
         expiry: "26 August 2728"
+
       },
+
 
       "UP1831831834": {
+
         licence: "UP1831831834",
+
         name: "samood",
+
         father: "Gul Raham",
+
         dateOfBirth: "10 October 2001",
+
         firstIssue: "11/2000",
+
         issueRenewal: "11/2000",
+
         category: "Car",
+
         expiry: "26 August 2728"
+
       },
+
 
       "UP1831831835": {
+
         licence: "UP1831831835",
+
         name: "samood",
+
         father: "Gul Raham",
+
         dateOfBirth: "10 October 2001",
+
         firstIssue: "11/2000",
+
         issueRenewal: "11/2000",
+
         category: "Car",
+
         expiry: "26 August 2728"
+
       },
+
 
       "UP1831831838": {
+
         licence: "UP1831831838",
+
         name: "adil",
+
         father: "adil Raham",
+
         dateOfBirth: "10 October 2001",
+
         firstIssue: "11/2000",
+
         issueRenewal: "11/2000",
+
         category: "Car",
+
         expiry: "26 August 2728"
+
       },
+
 
       "UP1831831839": {
+
         licence: "UP1831831839",
+
         name: "zeeshan ullah",
+
         father: "Zer Ali Khan",
+
         dateOfBirth: "15 june 2006",
+
         firstIssue: "11/2000",
+
         issueRenewal: "11/2000",
+
         category: "Car",
+
         expiry: "26 August 2728"
+
       },
+
 
       "UP10676109287": {
+
         licence: "UP10676109287",
+
         name: "Harsh Kumar",
+
         father: "Yamuna Dass",
+
         dateOfBirth: "7 Octuber 1984",
+
         firstIssue: "16/09/2018",
+
         issueRenewal: "16/09/2018",
+
         category: "Car",
+
         expiry: "15 September 2028"
+
       },
 
+
       "UP10676109288": {
+
         licence: "UP10676109288",
+
         name: "Wajid Kumar",
+
         father: "Noor Alam Kumar",
+
         dateOfBirth: "7 Octuber 1984",
+
         firstIssue: "16/09/2018",
+
         issueRenewal: "16/09/2018",
+
         category: "Car",
+
         expiry: "15 September 2028"
+
       }
 
     };
 
 
-    /* =========================
-       SEARCH SYSTEM
-    ========================== */
+    /* =====================================
+       SEARCH ELEMENTS
+    ====================================== */
 
-    const form = document.getElementById("search-form");
-    const input = document.getElementById("licence-input");
+    const form =
+      document.getElementById("search-form");
+
+
+    const input =
+      document.getElementById("licence-input");
+
 
     const resultForm =
       document.getElementById("result-search-form");
 
+
     const resultInput =
       document.getElementById("result-input");
+
 
     const error =
       document.getElementById("error-message");
 
+
+    /* =====================================
+       CLEAN NUMBER
+    ====================================== */
 
     function cleanNumber(value) {
 
@@ -627,9 +1369,14 @@
     }
 
 
+    /* =====================================
+       SEARCH LICENCE
+    ====================================== */
+
     function searchLicence(value) {
 
       const key = cleanNumber(value);
+
 
       error.classList.remove("show");
 
@@ -651,7 +1398,8 @@
 
       if (!record) {
 
-        error.textContent = "Record not found.";
+        error.textContent =
+          "Record not found.";
 
         error.classList.add("show");
 
@@ -660,34 +1408,54 @@
       }
 
 
-      document.getElementById("licence-number").textContent =
+      document
+        .getElementById("licence-number")
+        .textContent = record.licence;
+
+
+      document
+        .getElementById("name")
+        .textContent = record.name;
+
+
+      document
+        .getElementById("father-name")
+        .textContent = record.father;
+
+
+      document
+        .getElementById("date-of-birth")
+        .textContent = record.dateOfBirth;
+
+
+      document
+        .getElementById("first-issue")
+        .textContent = record.firstIssue;
+
+
+      document
+        .getElementById("issue-renewal")
+        .textContent = record.issueRenewal;
+
+
+      document
+        .getElementById("valid-until")
+        .textContent = record.expiry;
+
+
+      document
+        .getElementById("category")
+        .textContent = record.category;
+
+
+      resultInput.value =
         record.licence;
 
-      document.getElementById("name").textContent =
-        record.name;
 
-      document.getElementById("father-name").textContent =
-        record.father;
-
-      document.getElementById("date-of-birth").textContent =
-        record.dateOfBirth;
-
-      document.getElementById("first-issue").textContent =
-        record.firstIssue;
-
-      document.getElementById("issue-renewal").textContent =
-        record.issueRenewal;
-
-      document.getElementById("valid-until").textContent =
-        record.expiry;
-
-      document.getElementById("category").textContent =
-        record.category;
-
-
-      resultInput.value = record.licence;
+      document.body.classList.remove("menu-open");
 
       document.body.classList.add("results-view");
+
 
       window.scrollTo({
         top: 0,
@@ -697,46 +1465,73 @@
     }
 
 
-    form.addEventListener("submit", function(event) {
+    /* =====================================
+       HOME SEARCH
+    ====================================== */
 
-      event.preventDefault();
+    form.addEventListener(
+      "submit",
+      function(event) {
 
-      searchLicence(input.value);
+        event.preventDefault();
 
-    });
-
-
-    resultForm.addEventListener("submit", function(event) {
-
-      event.preventDefault();
-
-      const key = cleanNumber(resultInput.value);
-      const record = records[key];
-
-      if (!record) {
-
-        alert("Record not found.");
-
-        return;
+        searchLicence(input.value);
 
       }
-
-      searchLicence(resultInput.value);
-
-    });
+    );
 
 
-    /* QR / ?licence= support */
+    /* =====================================
+       RESULT SEARCH
+    ====================================== */
+
+    resultForm.addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const key =
+          cleanNumber(resultInput.value);
+
+
+        const record =
+          records[key];
+
+
+        if (!record) {
+
+          alert("Record not found.");
+
+          return;
+
+        }
+
+
+        searchLicence(resultInput.value);
+
+      }
+    );
+
+
+    /* =====================================
+       QR / URL SEARCH
+       ?licence=UP1831831835
+    ====================================== */
 
     const fromUrl =
-      new URLSearchParams(window.location.search)
-        .get("licence");
+      new URLSearchParams(
+        window.location.search
+      ).get("licence");
+
 
     if (fromUrl) {
 
       input.value = fromUrl;
 
       searchLicence(fromUrl);
+
 
       history.replaceState(
         null,
@@ -745,6 +1540,93 @@
       );
 
     }
+
+
+    /* =====================================
+       SIDE MENU
+    ====================================== */
+
+    const menuBtn =
+      document.getElementById("menuBtn");
+
+
+    const closeMenu =
+      document.getElementById("closeMenu");
+
+
+    const menuOverlay =
+      document.getElementById("menuOverlay");
+
+
+    const homeLink =
+      document.getElementById("homeLink");
+
+
+    menuBtn.addEventListener(
+      "click",
+      function() {
+
+        document.body.classList.add(
+          "menu-open"
+        );
+
+      }
+    );
+
+
+    closeMenu.addEventListener(
+      "click",
+      function() {
+
+        document.body.classList.remove(
+          "menu-open"
+        );
+
+      }
+    );
+
+
+    menuOverlay.addEventListener(
+      "click",
+      function() {
+
+        document.body.classList.remove(
+          "menu-open"
+        );
+
+      }
+    );
+
+
+    homeLink.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+
+        document.body.classList.remove(
+          "menu-open"
+        );
+
+
+        document.body.classList.remove(
+          "results-view"
+        );
+
+
+        input.value = "";
+
+        error.classList.remove("show");
+
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+    );
 
   </script>
 
