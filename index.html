@@ -6,7 +6,7 @@
 
   <title>Online Licence Verification</title>
 
-  <!-- Google Font: Inter (Exact matching weights) -->
+  <!-- Google Font: Inter (Weights 400 to 900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
       min-height: 100%;
     }
 
-    /* EXACT WATERCOLOR / CLOUDY BACKGROUND FROM SCREENSHOT */
+    /* EXACT WATERCOLOR CLOUDY BACKGROUND */
     body {
       min-width: 320px;
       min-height: 100vh;
@@ -71,7 +71,6 @@
     /* =========================
        MENU BUTTON
     ========================= */
-
     .menu-btn {
       position: fixed;
       top: 20px;
@@ -92,7 +91,6 @@
     /* =========================
        MENU OVERLAY
     ========================= */
-
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -111,7 +109,6 @@
     /* =========================
        SIDE MENU
     ========================= */
-
     .side-menu {
       position: fixed;
       top: 0;
@@ -194,7 +191,6 @@
     /* =========================
        HOME VIEW
     ========================= */
-
     .home {
       min-height: 100vh;
       padding: 40px 20px 80px;
@@ -205,43 +201,43 @@
 
     .hero {
       width: 100%;
-      max-width: 620px;
+      max-width: 700px;
       margin: 40px auto 0;
       text-align: center;
     }
 
-    /* EXACT MATCHING TITLE */
+    /* MAIN HEADING */
     .hero h1 {
       margin: 0 0 34px;
       color: var(--color-primary-blue);
-      font-size: clamp(34px, 5.2vw, 48px);
-      line-height: 1.18;
+      font-size: clamp(36px, 5.5vw, 52px);
+      line-height: 1.15;
       font-weight: 900;
-      letter-spacing: -0.8px;
+      letter-spacing: -1px;
     }
 
-    /* EXACT SEARCH CONTAINER */
+    /* SEARCH BAR */
     .search {
       width: 100%;
-      max-width: 480px;
+      max-width: 540px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 64px;
+      grid-template-columns: 1fr 68px;
       overflow: hidden;
-      border-radius: 9px;
+      border-radius: 10px;
       background: var(--color-white);
       box-shadow: 0 8px 24px rgba(15, 34, 58, 0.12);
     }
 
     .search input {
       width: 100%;
-      height: 54px;
+      height: 58px;
       padding: 0 20px;
       border: 0;
       outline: 0;
       background: var(--color-white);
       color: #1f2937;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
     }
 
@@ -252,7 +248,7 @@
     }
 
     .search button {
-      height: 54px;
+      height: 58px;
       display: grid;
       place-items: center;
       border: 0;
@@ -266,37 +262,53 @@
     }
 
     .search button svg {
-      width: 22px;
-      height: 22px;
+      width: 25px;
+      height: 25px;
     }
 
-    /* EXACT INLINE TEXT: • SECURE • FAST • RELIABLE */
+    /* ========================================================
+       EXACT LARGE & BOLD: • Secure • Fast • Reliable
+    ======================================================== */
     .features-inline {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 18px;
-      margin-top: 32px;
+      gap: 22px 30px;
+      margin-top: 38px;
       color: var(--color-white);
-      font-size: 24px;
-      font-weight: 800;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+      /* Screen k mutabiq bara font size */
+      font-size: clamp(26px, 4.2vw, 36px);
+      font-weight: 900;
+      letter-spacing: -0.6px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     }
 
     .features-inline span {
       display: inline-flex;
       align-items: center;
+      gap: 10px;
       color: var(--color-white);
-      font-weight: 800;
+      font-weight: 900;
+    }
+
+    /* Exact White Dot Symbol */
+    .features-inline span::before {
+      content: "";
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
     /* BOTTOM FEATURES LIST */
     .features-bottom {
       width: fit-content;
-      margin: 85px auto 0;
+      margin: 90px auto 0;
       display: grid;
-      gap: 26px;
+      gap: 28px;
     }
 
     .feature {
@@ -304,9 +316,9 @@
       align-items: center;
       gap: 16px;
       color: var(--color-dark-navy);
-      font-size: 26px;
+      font-size: clamp(22px, 3.5vw, 29px);
       font-weight: 900;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
     }
 
     .feature-text {
@@ -315,15 +327,15 @@
     }
 
     .feature-icon {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       display: grid;
       place-items: center;
     }
 
     .feature-icon svg {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
     }
 
     .green {
@@ -341,14 +353,14 @@
     /* ERROR NOTIFICATION */
     .search-error {
       display: none;
-      max-width: 480px;
+      max-width: 540px;
       margin: 14px auto 0;
       padding: 10px 14px;
       border-radius: 8px;
       background: #fef2f2;
       border: 1px solid #fecaca;
       color: #b91c1c;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
     }
@@ -360,7 +372,6 @@
     /* =========================
        LOGIN PAGE VIEW
     ========================= */
-
     .login-page {
       display: none;
       min-height: 100vh;
@@ -380,7 +391,7 @@
 
     .login-box {
       width: min(100%, 480px);
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 42px 36px;
@@ -480,7 +491,6 @@
     /* =========================
        RESULT PAGE VIEW
     ========================= */
-
     .result-page {
       display: none;
       width: min(calc(100% - 24px), 640px);
@@ -590,23 +600,27 @@
       font-weight: 700;
     }
 
-    /* RESPONSIVE MOBILE TWEAKS */
+    /* RESPONSIVE MOBILE FIX */
     @media (max-width: 480px) {
       .hero h1 {
-        font-size: 30px;
+        font-size: 32px;
       }
       .features-inline {
-        font-size: 19px;
-        gap: 12px;
+        font-size: 24px;
+        gap: 16px;
+      }
+      .features-inline span::before {
+        width: 8px;
+        height: 8px;
       }
       .feature {
-        font-size: 21px;
+        font-size: 22px;
       }
       .features-bottom {
         margin-top: 60px;
       }
       .search input {
-        font-size: 13.5px;
+        font-size: 14px;
         padding: 0 14px;
       }
     }
@@ -615,9 +629,7 @@
 
 <body>
 
-<!-- =========================
-     MENU BUTTON
-========================= -->
+<!-- MENU BUTTON -->
 <button
   type="button"
   class="menu-btn"
@@ -632,9 +644,7 @@
   id="menuOverlay"
 ></div>
 
-<!-- =========================
-     SIDE MENU
-========================= -->
+<!-- SIDE MENU -->
 <aside
   class="side-menu"
   id="sideMenu"
@@ -680,9 +690,7 @@
   </nav>
 </aside>
 
-<!-- =========================
-     HOME VIEW
-========================= -->
+<!-- HOME VIEW -->
 <main class="home">
   <section class="hero">
     <h1>
@@ -718,11 +726,11 @@
       id="searchError"
     ></div>
 
-    <!-- INLINE WORDS -->
+    <!-- EXACT BOLD & PROMINENT INLINE WORDS -->
     <div class="features-inline">
-      <span>• Secure</span>
-      <span>• Fast</span>
-      <span>• Reliable</span>
+      <span>Secure</span>
+      <span>Fast</span>
+      <span>Reliable</span>
     </div>
   </section>
 
@@ -767,9 +775,7 @@
   </section>
 </main>
 
-<!-- =========================
-     LOGIN PAGE VIEW
-========================= -->
+<!-- LOGIN PAGE VIEW -->
 <main
   class="login-page"
   id="loginPage"
@@ -828,9 +834,7 @@
   </section>
 </main>
 
-<!-- =========================
-     RESULT PAGE VIEW
-========================= -->
+<!-- RESULT PAGE VIEW -->
 <main class="result-page">
   <img
     src="/result-banner.jpeg"
@@ -901,9 +905,7 @@
 </main>
 
 <script>
-/* =========================
-   RECORDS DATA
-========================= */
+/* RECORDS DATA */
 const records = {
   "UP671092871201": {
     licence: "UP671092871201",
@@ -997,9 +999,7 @@ const records = {
   }
 };
 
-/* =========================
-   ELEMENT SELECTORS
-========================= */
+/* ELEMENT SELECTORS */
 const menuBtn = document.getElementById("menuBtn");
 const closeMenu = document.getElementById("closeMenu");
 const menuOverlay = document.getElementById("menuOverlay");
@@ -1014,18 +1014,16 @@ const adminPassword = document.getElementById("adminPassword");
 const showPassword = document.getElementById("showPassword");
 const adminLoginForm = document.getElementById("adminLoginForm");
 
-/* Auto remove dashes as user types */
-licenceInput.addEventListener('input', function(e) {
+/* Auto remove dashes */
+licenceInput.addEventListener('input', function() {
   this.value = this.value.replace(/-/g, '');
 });
 
-resultInput.addEventListener('input', function(e) {
+resultInput.addEventListener('input', function() {
   this.value = this.value.replace(/-/g, '');
 });
 
-/* =========================
-   MENU EVENTS
-========================= */
+/* MENU EVENTS */
 menuBtn.addEventListener("click", () => document.body.classList.add("menu-open"));
 closeMenu.addEventListener("click", () => document.body.classList.remove("menu-open"));
 menuOverlay.addEventListener("click", () => document.body.classList.remove("menu-open"));
@@ -1056,9 +1054,7 @@ function cleanNumber(value) {
   return value.trim().replace(/[\s-]/g, "").toUpperCase();
 }
 
-/* =========================
-   SEARCH LOGIC
-========================= */
+/* SEARCH LOGIC */
 function searchLicence(value) {
   const key = cleanNumber(value);
   searchError.classList.remove("show");
@@ -1110,7 +1106,7 @@ resultSearchForm.addEventListener("submit", (event) => {
   searchLicence(resultInput.value);
 });
 
-/* URL PARAMETER HANDLING */
+/* URL PARAMETER */
 const fromUrl = new URLSearchParams(window.location.search).get("licence");
 if (fromUrl) {
   licenceInput.value = fromUrl;
