@@ -14,7 +14,6 @@
   <style>
     :root {
       --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      /* Exact vibrant electric blue from screenshot */
       --color-primary-blue: #1749c6;
       --color-dark-navy: #0e1726;
       --color-btn-red: #dc2626;
@@ -36,28 +35,19 @@
       min-height: 100%;
     }
 
-    /* ========================================================
-       BACKGROUND (green-texture.webp.jpeg with fallback)
-    ======================================================== */
     body {
       min-width: 320px;
       min-height: 100vh;
       font-family: var(--font-main);
       color: var(--color-dark-navy);
-
-      /* Base fallback mint color */
       background-color: #cde4de;
-
-      /* Soft overlay so clouds/texture remain clearly visible */
       background-image: 
         linear-gradient(rgba(215, 240, 233, 0.40), rgba(215, 240, 233, 0.40)),
         url("./green-texture.webp.jpeg");
-
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
       background-attachment: fixed;
-
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -71,9 +61,6 @@
       cursor: pointer;
     }
 
-    /* =========================
-       MENU BUTTON
-    ========================= */
     .menu-btn {
       position: fixed;
       top: 20px;
@@ -91,9 +78,6 @@
       font-weight: 900;
     }
 
-    /* =========================
-       MENU OVERLAY
-    ========================= */
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -109,9 +93,6 @@
       visibility: visible;
     }
 
-    /* =========================
-       SIDE MENU
-    ========================= */
     .side-menu {
       position: fixed;
       top: 0;
@@ -191,9 +172,6 @@
       height: 24px;
     }
 
-    /* =========================
-       HOME VIEW
-    ========================= */
     .home {
       min-height: 100vh;
       padding: 40px 20px 80px;
@@ -209,7 +187,6 @@
       text-align: center;
     }
 
-    /* MAIN HEADING */
     .hero h1 {
       margin: 0 auto 32px;
       color: var(--color-primary-blue);
@@ -221,7 +198,6 @@
       width: 100%;
     }
 
-    /* SEARCH BAR */
     .search {
       width: 100%;
       max-width: 480px;
@@ -271,7 +247,6 @@
       height: 24px;
     }
 
-    /* • Secure • Fast • Reliable */
     .features-inline {
       display: flex;
       justify-content: center;
@@ -304,7 +279,6 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
-    /* BOTTOM FEATURES */
     .features-bottom {
       width: fit-content;
       margin: 85px auto 0;
@@ -339,19 +313,10 @@
       height: 40px;
     }
 
-    .green {
-      color: #16a34a;
-    }
+    .green { color: #16a34a; }
+    .red { color: #dc2626; }
+    .blue { color: #2563eb; }
 
-    .red {
-      color: #dc2626;
-    }
-
-    .blue {
-      color: #2563eb;
-    }
-
-    /* ERROR NOTIFICATION */
     .search-error {
       display: none;
       max-width: 480px;
@@ -370,9 +335,6 @@
       display: block;
     }
 
-    /* =========================
-       LOGIN PAGE VIEW
-    ========================= */
     .login-page {
       display: none;
       min-height: 100vh;
@@ -487,9 +449,6 @@
       background: #1e293b;
     }
 
-    /* =========================
-       RESULT PAGE VIEW
-    ========================= */
     .result-page {
       display: none;
       width: min(calc(100% - 24px), 640px);
@@ -598,29 +557,13 @@
       font-weight: 700;
     }
 
-    /* RESPONSIVE MOBILE FIX */
     @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 30px;
-      }
-      .features-inline {
-        font-size: 22px;
-        gap: 14px;
-      }
-      .features-inline span::before {
-        width: 8px;
-        height: 8px;
-      }
-      .feature {
-        font-size: 21px;
-      }
-      .features-bottom {
-        margin-top: 60px;
-      }
-      .search input {
-        font-size: 14px;
-        padding: 0 14px;
-      }
+      .hero h1 { font-size: 30px; }
+      .features-inline { font-size: 22px; gap: 14px; }
+      .features-inline span::before { width: 8px; height: 8px; }
+      .feature { font-size: 21px; }
+      .features-bottom { margin-top: 60px; }
+      .search input { font-size: 14px; padding: 0 14px; }
     }
   </style>
 </head>
@@ -628,43 +571,23 @@
 <body>
 
 <!-- MENU BUTTON -->
-<button
-  type="button"
-  class="menu-btn"
-  id="menuBtn"
-  aria-label="Open menu"
->
+<button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
   ☰
 </button>
 
-<div
-  class="menu-overlay"
-  id="menuOverlay"
-></div>
+<div class="menu-overlay" id="menuOverlay"></div>
 
 <!-- SIDE MENU -->
-<aside
-  class="side-menu"
-  id="sideMenu"
->
+<aside class="side-menu" id="sideMenu">
   <div class="menu-header">
     <strong>Menu</strong>
-    <button
-      type="button"
-      class="close-menu"
-      id="closeMenu"
-    >
-      ×
-    </button>
+    <button type="button" class="close-menu" id="closeMenu">×</button>
   </div>
 
   <div class="menu-line"></div>
 
   <nav class="side-links">
-    <a
-      href="#"
-      id="homeLink"
-    >
+    <a href="#" id="homeLink">
       <span class="menu-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"/>
@@ -673,10 +596,7 @@
       <span>Home</span>
     </a>
 
-    <a
-      href="#"
-      id="loginLink"
-    >
+    <a href="#" id="loginLink">
       <span class="menu-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <circle cx="12" cy="7" r="4"/>
@@ -697,10 +617,7 @@
     </h1>
 
     <!-- SEARCH -->
-    <form
-      class="search"
-      id="searchForm"
-    >
+    <form class="search" id="searchForm">
       <input
         id="licenceInput"
         type="text"
@@ -708,10 +625,7 @@
         autocomplete="off"
         placeholder="Type DL/CNIC Number Without Dash"
       >
-      <button
-        type="submit"
-        aria-label="Search"
-      >
+      <button type="submit" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none">
           <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
           <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
@@ -719,12 +633,8 @@
       </button>
     </form>
 
-    <div
-      class="search-error"
-      id="searchError"
-    ></div>
+    <div class="search-error" id="searchError"></div>
 
-    <!-- BOLD & PROMINENT INLINE WORDS -->
     <div class="features-inline">
       <span>Secure</span>
       <span>Fast</span>
@@ -740,9 +650,7 @@
           <path d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"/>
         </svg>
       </span>
-      <span class="feature-text">
-        Digital Security
-      </span>
+      <span class="feature-text">Digital Security</span>
     </div>
 
     <div class="feature">
@@ -752,9 +660,7 @@
           <path d="M12 6v6l4 2" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
       </span>
-      <span class="feature-text">
-        24/7 Available
-      </span>
+      <span class="feature-text">24/7 Available</span>
     </div>
 
     <div class="feature">
@@ -766,54 +672,27 @@
           <path d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"/>
         </svg>
       </span>
-      <span class="feature-text">
-        Global Access
-      </span>
+      <span class="feature-text">Global Access</span>
     </div>
   </section>
 </main>
 
 <!-- LOGIN PAGE VIEW -->
-<main
-  class="login-page"
-  id="loginPage"
->
+<main class="login-page" id="loginPage">
   <section class="login-box">
-    <h2>
-      Welcome Back Admin 👋
-    </h2>
+    <h2>Welcome Back Admin 👋</h2>
 
     <form id="adminLoginForm">
       <div class="login-field">
-        <label for="adminEmail">
-          Email Address
-        </label>
-        <input
-          type="email"
-          id="adminEmail"
-          placeholder="Enter your email"
-          autocomplete="email"
-          required
-        >
+        <label for="adminEmail">Email Address</label>
+        <input type="email" id="adminEmail" placeholder="Enter your email" autocomplete="email" required>
       </div>
 
       <div class="login-field">
-        <label for="adminPassword">
-          Password
-        </label>
+        <label for="adminPassword">Password</label>
         <div class="password-wrap">
-          <input
-            type="password"
-            id="adminPassword"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-          >
-          <button
-            type="button"
-            class="show-password"
-            id="showPassword"
-          >
+          <input type="password" id="adminPassword" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="show-password" id="showPassword">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z" stroke="currentColor" stroke-width="2"/>
               <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
@@ -822,37 +701,18 @@
         </div>
       </div>
 
-      <button
-        type="submit"
-        class="admin-login-btn"
-      >
-        Login
-      </button>
+      <button type="submit" class="admin-login-btn">Login</button>
     </form>
   </section>
 </main>
 
 <!-- RESULT PAGE VIEW -->
 <main class="result-page">
-  <img
-    src="./result-banner.jpeg"
-    class="result-banner"
-    alt="Licence Verification"
-  >
+  <img src="./result-banner.jpeg" class="result-banner" alt="Licence Verification">
 
-  <form
-    class="result-search"
-    id="resultSearchForm"
-  >
-    <input
-      id="resultInput"
-      type="text"
-      placeholder="Type DL/CNIC Number Without Dash"
-    >
-    <button
-      type="submit"
-      aria-label="Search"
-    >
+  <form class="result-search" id="resultSearchForm">
+    <input id="resultInput" type="text" placeholder="Type DL/CNIC Number Without Dash">
+    <button type="submit" aria-label="Search">
       <svg viewBox="0 0 24 24" fill="none">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
         <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
@@ -1003,8 +863,9 @@ const records = {
     firstIssue: "15/05/2019",
     issueRenewal: "15/05/2019",
     category: "Motor Car + Motor Cycle/jeep only",
-    expiry: "14 may 2028" 
-  },
+    expiry: "14 may 2028"  
+  }
+}; /* <-- FIXED: Added missing closing brace and parenthesis here */
 
 /* ELEMENT SELECTORS */
 const menuBtn = document.getElementById("menuBtn");
