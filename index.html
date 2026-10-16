@@ -154,6 +154,7 @@
       font-size: 18px;
       font-weight: 600;
       transition: background .15s ease;
+      cursor: pointer;
     }
 
     .side-links a:hover {
@@ -465,10 +466,6 @@
       display: block;
     }
 
-    body.results-view .menu-btn {
-      display: none;
-    }
-
     .result-banner {
       display: block;
       width: 100%;
@@ -476,6 +473,7 @@
       border-radius: 10px;
       margin-bottom: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      cursor: pointer;
     }
 
     .result-search {
@@ -587,7 +585,7 @@
   <div class="menu-line"></div>
 
   <nav class="side-links">
-    <a href="#" id="homeLink">
+    <a href="#home" id="homeLink">
       <span class="menu-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"/>
@@ -596,7 +594,7 @@
       <span>Home</span>
     </a>
 
-    <a href="#" id="loginLink">
+    <a href="#login" id="loginLink">
       <span class="menu-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <circle cx="12" cy="7" r="4"/>
@@ -609,7 +607,7 @@
 </aside>
 
 <!-- HOME VIEW -->
-<main class="home">
+<main class="home" id="homePage">
   <section class="hero">
     <h1>
       Welcome To Online<br>
@@ -707,8 +705,8 @@
 </main>
 
 <!-- RESULT PAGE VIEW -->
-<main class="result-page">
-  <img src="./result-banner.jpeg" class="result-banner" alt="Licence Verification">
+<main class="result-page" id="resultPage">
+  <img src="./result-banner.jpeg" class="result-banner" id="resultBanner" alt="Licence Verification" title="Click to return to Home">
 
   <form class="result-search" id="resultSearchForm">
     <input id="resultInput" type="text" placeholder="Type DL/CNIC Number Without Dash">
@@ -865,7 +863,7 @@ const records = {
     category: "Motor Car + Motor Cycle/jeep only",
     expiry: "14 Apr 2028"  
   }
-}; /* <-- FIXED: Added missing closing brace and parenthesis here */
+};
 
 /* ELEMENT SELECTORS */
 const menuBtn = document.getElementById("menuBtn");
@@ -878,6 +876,8 @@ const licenceInput = document.getElementById("licenceInput");
 const searchError = document.getElementById("searchError");
 const resultSearchForm = document.getElementById("resultSearchForm");
 const resultInput = document.getElementById("resultInput");
+const resultBanner = document.getElementById("resultBanner");
+const loginPage = document.getElementById("loginPage");
 const adminPassword = document.getElementById("adminPassword");
 const showPassword = document.getElementById("showPassword");
 const adminLoginForm = document.getElementById("adminLoginForm");
@@ -891,23 +891,48 @@ resultInput.addEventListener('input', function() {
   this.value = this.value.replace(/-/g, '');
 });
 
+/* FUNCTION TO GO BACK TO MAIN HOME SCREEN */
+function goToHomeScreen(event) {
+  if (event) event.preventDefault();
+  document.body.classList.remove("menu-open", "login-view", "results-view");
+  searchError.classList.remove("show");
+  licenceInput.value = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 /* MENU EVENTS */
-menuBtn.addEventListener("click", () => document.body.classList.add("menu-open"));
+menuBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  document.body.classList.add("menu-open");
+});
 closeMenu.addEventListener("click", () => document.body.classList.remove("menu-open"));
 menuOverlay.addEventListener("click", () => document.body.classList.remove("menu-open"));
 
 /* NAVIGATION */
-homeLink.addEventListener("click", (event) => {
-  event.preventDefault();
-  document.body.classList.remove("menu-open", "login-view", "results-view");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+homeLink.addEventListener("click", goToHomeScreen);
 
 loginLink.addEventListener("click", (event) => {
   event.preventDefault();
   document.body.classList.remove("menu-open", "results-view");
   document.body.classList.add("login-view");
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* CLICK BANNER OR EMPTY SCREEN TO RETURN TO MAIN SCREEN */
+resultBanner.addEventListener("click", goToHomeScreen);
+
+loginPage.addEventListener("click", (event) => {
+  // If user clicks outside the login-box on the background screen, go to main screen
+  if (event.target === loginPage) {
+    goToHomeScreen();
+  }
+});
+
+document.body.addEventListener("click", (event) => {
+  // If on results view and user clicks empty background outside the result-page container
+  if (document.body.classList.contains("results-view") && event.target === document.body) {
+    goToHomeScreen();
+  }
 });
 
 /* PASSWORD TOGGLE */
