@@ -61,10 +61,11 @@
       cursor: pointer;
     }
 
+    /* MENU BUTTON */
     .menu-btn {
       position: fixed;
-      top: 20px;
-      right: 22px;
+      top: 16px;
+      right: 18px;
       z-index: 100;
       width: 44px;
       height: 44px;
@@ -450,10 +451,11 @@
       background: #1e293b;
     }
 
+    /* RESULT PAGE - Top margin increased so 3-line menu button stays above picture */
     .result-page {
       display: none;
       width: min(calc(100% - 24px), 640px);
-      margin: 30px auto;
+      margin: 72px auto 30px;
       padding-bottom: 40px;
     }
 
@@ -562,6 +564,7 @@
       .feature { font-size: 21px; }
       .features-bottom { margin-top: 60px; }
       .search input { font-size: 14px; padding: 0 14px; }
+      .result-page { margin-top: 68px; }
     }
   </style>
 </head>
@@ -922,14 +925,12 @@ loginLink.addEventListener("click", (event) => {
 resultBanner.addEventListener("click", goToHomeScreen);
 
 loginPage.addEventListener("click", (event) => {
-  // If user clicks outside the login-box on the background screen, go to main screen
   if (event.target === loginPage) {
     goToHomeScreen();
   }
 });
 
 document.body.addEventListener("click", (event) => {
-  // If on results view and user clicks empty background outside the result-page container
   if (document.body.classList.contains("results-view") && event.target === document.body) {
     goToHomeScreen();
   }
