@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Online Licence Verification</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --color-primary-blue: #1749c6;
+      --color-dark-navy: #0e1726;
+      --color-btn-red: #dc2626;
+      --color-btn-red-hover: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      color: var(--color-dark-navy);
+      background-color: #cde4de;
+      background-image: 
+        linear-gradient(rgba(215, 240, 233, 0.40), rgba(215, 240, 233, 0.40)),
+        url("./green-texture.webp.jpeg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button,
+    input {
+      font-family: var(--font-main);
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* MENU BUTTON */
+    .menu-btn {
+      position: fixed;
+      top: 16px;
+      right: 18px;
+      z-index: 100;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #0e1726;
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      background: rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s;
+    }
+
+    body.menu-open .menu-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 999;
+      width: min(72vw, 420px);
+      height: 100vh;
+      padding: 35px 30px;
+      background: #ffffff;
+      transform: translateX(100%);
+      transition: transform .28s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -8px 0 25px rgba(0,0,0,.1);
+    }
+
+    body.menu-open .side-menu {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--color-dark-navy);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .close-menu {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #111;
+      font-size: 36px;
+      font-weight: 800;
+    }
+
+    .menu-line {
+      height: 1px;
+      margin-top: 14px;
+      background: #e2e8f0;
+    }
+
+    .side-links {
+      padding-top: 25px;
+    }
+
+    .side-links a {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 12px;
+      border-radius: 8px;
+      color: #1e293b;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      transition: background .15s ease;
+      cursor: pointer;
+    }
+
+    .side-links a:hover {
+      background: #f1f5f9;
+    }
+
+    .menu-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+    }
+
+    .menu-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .home {
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 520px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      margin: 0 auto 32px;
+      color: var(--color-primary-blue);
+      font-family: var(--font-main);
+      font-size: clamp(34px, 5.2vw, 46px);
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -0.6px;
+      width: 100%;
+    }
+
+    .search {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 64px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(15, 34, 58, 0.12);
+    }
+
+    .search input {
+      width: 100%;
+      height: 56px;
+      padding: 0 18px;
+      border: 0;
+      outline: 0;
+      background: #ffffff;
+      color: #1f2937;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .search input::placeholder {
+      color: #6b7280;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .search button {
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: var(--color-btn-red);
+      color: #ffffff;
+      transition: background .15s ease;
+    }
+
+    .search button:hover {
+      background: var(--color-btn-red-hover);
+    }
+
+    .search button svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .features-inline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px 28px;
+      margin-top: 36px;
+      color: #ffffff;
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 7px rgba(0, 0, 0, 0.16);
+    }
+
+    .features-inline span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .features-inline span::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .features-bottom {
+      width: fit-content;
+      margin: 85px auto 0;
+      display: grid;
+      gap: 28px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--color-dark-navy);
+      font-size: clamp(22px, 3.4vw, 28px);
+      font-weight: 900;
+      letter-spacing: -0.4px;
+    }
+
+    .feature-text {
+      color: var(--color-dark-navy);
+      font-weight: 900;
+    }
+
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+    }
+
+    .feature-icon svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .green { color: #16a34a; }
+    .red { color: #dc2626; }
+    .blue { color: #2563eb; }
+
+    .search-error {
+      display: none;
+      max-width: 480px;
+      margin: 14px auto 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .search-error.show {
+      display: block;
+    }
+
+    .login-page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body.login-view .home,
+    body.login-view .result-page {
+      display: none !important;
+    }
+
+    body.login-view .login-page {
+      display: flex;
+    }
+
+    .login-box {
+      width: min(100%, 480px);
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 40px 34px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-box h2 {
+      margin: 0 0 32px;
+      color: var(--color-dark-navy);
+      text-align: center;
+      font-size: 30px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .login-field {
+      margin-bottom: 22px;
+    }
+
+    .login-field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #334155;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .login-field input {
+      width: 100%;
+      height: 54px;
+      padding: 0 18px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 16px;
+      transition: border-color .15s ease;
+    }
+
+    .login-field input::placeholder {
+      color: #94a3b8;
+    }
+
+    .login-field input:focus {
+      border-color: var(--color-primary-blue);
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 50px;
+    }
+
+    .show-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #64748b;
+    }
+
+    .show-password svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .admin-login-btn {
+      width: 100%;
+      height: 54px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--color-dark-navy);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      transition: background .15s ease;
+    }
+
+    .admin-login-btn:hover {
+      background: #1e293b;
+    }
+
+    /* RESULT PAGE - Top margin increased so 3-line menu button stays above picture */
+    .result-page {
+      display: none;
+      width: min(calc(100% - 24px), 640px);
+      margin: 72px auto 30px;
+      padding-bottom: 40px;
+    }
+
+    body.results-view .home,
+    body.results-view .login-page {
+      display: none !important;
+    }
+
+    body.results-view .result-page {
+      display: block;
+    }
+
+    .result-banner {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+
+    .result-search {
+      display: grid;
+      grid-template-columns: 1fr 64px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border-radius: 9px;
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    }
+
+    .result-search input {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      border: 0;
+      outline: 0;
+      font-size: 15px;
+    }
+
+    .result-search button {
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: var(--color-btn-red);
+      color: #fff;
+    }
+
+    .result-search svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .result-card {
+      overflow: hidden;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(0,0,0,.1);
+      border: 1px solid #e2e8f0;
+    }
+
+    .result-head {
+      padding: 16px;
+      background: #0f172a;
+      color: #ffffff;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .detail {
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .detail:last-child {
+      border-bottom: 0;
+    }
+
+    .detail:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .detail label,
+    .detail strong {
+      display: block;
+      padding: 12px 18px;
+      font-size: 15px;
+    }
+
+    .detail label {
+      color: #64748b;
+      font-weight: 600;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .detail strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 30px; }
+      .features-inline { font-size: 22px; gap: 14px; }
+      .features-inline span::before { width: 8px; height: 8px; }
+      .feature { font-size: 21px; }
+      .features-bottom { margin-top: 60px; }
+      .search input { font-size: 14px; padding: 0 14px; }
+      .result-page { margin-top: 68px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- MENU BUTTON -->
+<button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+  ☰
+</button>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SIDE MENU -->
+<aside class="side-menu" id="sideMenu">
+  <div class="menu-header">
+    <strong>Menu</strong>
+    <button type="button" class="close-menu" id="closeMenu">×</button>
+  </div>
+
+  <div class="menu-line"></div>
+
+  <nav class="side-links">
+    <a href="#home" id="homeLink">
+      <span class="menu-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"/>
+        </svg>
+      </span>
+      <span>Home</span>
+    </a>
+
+    <a href="#login" id="loginLink">
+      <span class="menu-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="7" r="4"/>
+          <path d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z"/>
+        </svg>
+      </span>
+      <span>Login</span>
+    </a>
+  </nav>
+</aside>
+
+<!-- HOME VIEW -->
+<main class="home" id="homePage">
+  <section class="hero">
+    <h1>
+      Welcome To Online<br>
+      Verification Services
+    </h1>
+
+    <!-- SEARCH -->
+    <form class="search" id="searchForm">
+      <input
+        id="licenceInput"
+        type="text"
+        inputmode="text"
+        autocomplete="off"
+        placeholder="Type DL/CNIC Number Without Dash"
+      >
+      <button type="submit" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
+          <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="search-error" id="searchError"></div>
+
+    <div class="features-inline">
+      <span>Secure</span>
+      <span>Fast</span>
+      <span>Reliable</span>
+    </div>
+  </section>
+
+  <!-- BOTTOM FEATURES -->
+  <section class="features-bottom">
+    <div class="feature">
+      <span class="feature-icon green">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"/>
+        </svg>
+      </span>
+      <span class="feature-text">Digital Security</span>
+    </div>
+
+    <div class="feature">
+      <span class="feature-icon red">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="feature-text">24/7 Available</span>
+    </div>
+
+    <div class="feature">
+      <span class="feature-icon blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18"/>
+          <path d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21"/>
+          <path d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"/>
+        </svg>
+      </span>
+      <span class="feature-text">Global Access</span>
+    </div>
+  </section>
+</main>
+
+<!-- LOGIN PAGE VIEW -->
+<main class="login-page" id="loginPage">
+  <section class="login-box">
+    <h2>Welcome Back Admin 👋</h2>
+
+    <form id="adminLoginForm">
+      <div class="login-field">
+        <label for="adminEmail">Email Address</label>
+        <input type="email" id="adminEmail" placeholder="Enter your email" autocomplete="email" required>
+      </div>
+
+      <div class="login-field">
+        <label for="adminPassword">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="adminPassword" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="show-password" id="showPassword">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="admin-login-btn">Login</button>
+    </form>
+  </section>
+</main>
+
+<!-- RESULT PAGE VIEW -->
+<main class="result-page" id="resultPage">
+  <img src="./result-banner.jpg" class="result-banner" id="resultBanner" alt="Licence Verification" title="Click to return to Home">
+
+  <form class="result-search" id="resultSearchForm">
+    <input id="resultInput" type="text" placeholder="Type DL/CNIC Number Without Dash">
+    <button type="submit" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
+        <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </form>
+
+  <article class="result-card">
+    <div class="result-head">
+      License Number: <span id="licenceNumber"></span>
+    </div>
+
+    <div class="detail">
+      <label>Name</label>
+      <strong id="recordName"></strong>
+    </div>
+
+    <div class="detail">
+      <label>Father name</label>
+      <strong id="fatherName"></strong>
+    </div>
+
+    <div class="detail">
+      <label>Date of Birth</label>
+      <strong id="dateOfBirth"></strong>
+    </div>
+
+    <div class="detail">
+      <label>First Issue</label>
+      <strong id="firstIssue"></strong>
+    </div>
+
+    <div class="detail">
+      <label>Issue / Renewal</label>
+      <strong id="issueRenewal"></strong>
+    </div>
+
+    <div class="detail">
+      <label>Validity</label>
+      <strong id="validUntil"></strong>
+    </div>
+
+    <div class="detail">
+      <label>Category</label>
+      <strong id="category"></strong>
+    </div>
+  </article>
+</main>
+
+<script>
+/* RECORDS DATA */
+const records = {
+  "UP664033011784": {
+    licence: "UP664033011784",
+    name: "Balaji Subramaniyan",
+    father: "Subramaniyan",
+    dateOfBirth: "17 March 1990",
+    firstIssue: "19 jun 2019",
+    issueRenewal: "19 jun 2019",
+    category: "Motor CYCLE+Motor CAR/JEEP ONLY",
+    expiry: "18 jun 2029"
+  },
+  "UP9081726354": {
+    licence: "UP9081726354",
+    name: "Aamir Shah",
+    father: "Naeem Shah",
+    dateOfBirth: "12 June 1994",
+    firstIssue: "20 August 2020",
+    issueRenewal: "20 August 2025",
+    category: "LMV / MCWG",
+    expiry: "19 August 2030"
+  },
+  "UP1831831833": {
+    licence: "UP1831831833",
+    name: "Arshad",
+    father: "Gul Raham",
+    dateOfBirth: "10 October 2001",
+    firstIssue: "11/2000",
+    issueRenewal: "11/2000",
+    category: "Car",
+    expiry: "26 August 2728"
+  },
+  "UP1831831834": {
+    licence: "UP1831831834",
+    name: "samood",
+    father: "Gul Raham",
+    dateOfBirth: "10 October 2001",
+    firstIssue: "11/2000",
+    issueRenewal: "11/2000",
+    category: "Car",
+    expiry: "26 August 2728"
+  },
+  "UP1831831835": {
+    licence: "UP1831831835",
+    name: "samood",
+    father: "Gul Raham",
+    dateOfBirth: "10 October 2001",
+    firstIssue: "11/2000",
+    issueRenewal: "11/2000",
+    category: "Car",
+    expiry: "26 August 2728"
+  },
+  "UP1831831838": {
+    licence: "UP1831831838",
+    name: "adil",
+    father: "adil Raham",
+    dateOfBirth: "10 October 2001",
+    firstIssue: "11/2000",
+    issueRenewal: "11/2000",
+    category: "Car",
+    expiry: "26 August 2728"
+  },
+  "UP1831831839": {
+    licence: "UP1831831839",
+    name: "zeeshan ullah",
+    father: "Zer Ali Khan",
+    dateOfBirth: "15 june 2006",
+    firstIssue: "11/2000",
+    issueRenewal: "11/2000",
+    category: "Car",
+    expiry: "26 August 2728"
+  },
+  "UP10676109287": {
+    licence: "UP10676109287",
+    name: "Harsh Kumar",
+    father: "Yamuna Dass",
+    dateOfBirth: "7 Octuber 1984",
+    firstIssue: "16/09/2018",
+    issueRenewal: "16/09/2018",
+    category: "Car",
+    expiry: "15 September 2028"
+  },
+  "UP10676109288": {
+    licence: "UP10676109288",
+    name: "Wajid Kumar",
+    father: "Noor Alam Kumar",
+    dateOfBirth: "7 Octuber 1984",
+    firstIssue: "16/09/2018",
+    issueRenewal: "16/09/2018",
+    category: "Car",
+    expiry: "15 September 2028"
+  },
+  "UP126981271680": {
+    licence: "UP126981271680",
+    name: "Shailendra Yadav",
+    father: "Ramlakshan Yadav",
+    dateOfBirth: "7 March 2000",
+    firstIssue: "15 may 2019",
+    issueRenewal: "15 may 2019",
+    category: "Motor Car + Motor Cycle/jeep only",
+    expiry: "14 may 2028"  
+  }
+};
+
+/* ELEMENT SELECTORS */
+const menuBtn = document.getElementById("menuBtn");
+const closeMenu = document.getElementById("closeMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+const homeLink = document.getElementById("homeLink");
+const loginLink = document.getElementById("loginLink");
+const searchForm = document.getElementById("searchForm");
+const licenceInput = document.getElementById("licenceInput");
+const searchError = document.getElementById("searchError");
+const resultSearchForm = document.getElementById("resultSearchForm");
+const resultInput = document.getElementById("resultInput");
+const resultBanner = document.getElementById("resultBanner");
+const loginPage = document.getElementById("loginPage");
+const adminPassword = document.getElementById("adminPassword");
+const showPassword = document.getElementById("showPassword");
+const adminLoginForm = document.getElementById("adminLoginForm");
+
+/* Auto remove dashes */
+licenceInput.addEventListener('input', function() {
+  this.value = this.value.replace(/-/g, '');
+});
+
+resultInput.addEventListener('input', function() {
+  this.value = this.value.replace(/-/g, '');
+});
+
+/* FUNCTION TO GO BACK TO MAIN HOME SCREEN */
+function goToHomeScreen(event) {
+  if (event) event.preventDefault();
+  document.body.classList.remove("menu-open", "login-view", "results-view");
+  searchError.classList.remove("show");
+  licenceInput.value = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* MENU EVENTS */
+menuBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  document.body.classList.add("menu-open");
+});
+closeMenu.addEventListener("click", () => document.body.classList.remove("menu-open"));
+menuOverlay.addEventListener("click", () => document.body.classList.remove("menu-open"));
+
+/* NAVIGATION */
+homeLink.addEventListener("click", goToHomeScreen);
+
+loginLink.addEventListener("click", (event) => {
+  event.preventDefault();
+  document.body.classList.remove("menu-open", "results-view");
+  document.body.classList.add("login-view");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* CLICK BANNER OR EMPTY SCREEN TO RETURN TO MAIN SCREEN */
+resultBanner.addEventListener("click", goToHomeScreen);
+
+loginPage.addEventListener("click", (event) => {
+  if (event.target === loginPage) {
+    goToHomeScreen();
+  }
+});
+
+document.body.addEventListener("click", (event) => {
+  if (document.body.classList.contains("results-view") && event.target === document.body) {
+    goToHomeScreen();
+  }
+});
+
+/* PASSWORD TOGGLE */
+showPassword.addEventListener("click", () => {
+  adminPassword.type = adminPassword.type === "password" ? "text" : "password";
+});
+
+adminLoginForm.addEventListener("submit", (e) => e.preventDefault());
+
+/* UTILITY */
+function cleanNumber(value) {
+  return value.trim().replace(/[\s-]/g, "").toUpperCase();
+}
+
+/* SEARCH LOGIC */
+function searchLicence(value) {
+  const key = cleanNumber(value);
+  searchError.classList.remove("show");
+
+  if (!key) {
+    searchError.textContent = "Please enter a licence or CNIC number.";
+    searchError.classList.add("show");
+    return;
+  }
+
+  const record = records[key];
+
+  if (!record) {
+    searchError.textContent = "Record not found.";
+    searchError.classList.add("show");
+    return;
+  }
+
+  document.getElementById("licenceNumber").textContent = record.licence;
+  document.getElementById("recordName").textContent = record.name;
+  document.getElementById("fatherName").textContent = record.father;
+  document.getElementById("dateOfBirth").textContent = record.dateOfBirth;
+  document.getElementById("firstIssue").textContent = record.firstIssue;
+  document.getElementById("issueRenewal").textContent = record.issueRenewal;
+  document.getElementById("validUntil").textContent = record.expiry;
+  document.getElementById("category").textContent = record.category;
+
+  resultInput.value = record.licence;
+
+  document.body.classList.remove("login-view", "menu-open");
+  document.body.classList.add("results-view");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* SEARCH HANDLERS */
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchLicence(licenceInput.value);
+});
+
+resultSearchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const key = cleanNumber(resultInput.value);
+  if (!records[key]) {
+    alert("Record not found.");
+    return;
+  }
+  searchLicence(resultInput.value);
+});
+
+/* URL PARAMETER */
+const fromUrl = new URLSearchParams(window.location.search).get("licence");
+if (fromUrl) {
+  licenceInput.value = fromUrl;
+  searchLicence(fromUrl);
+  history.replaceState(null, "", window.location.pathname);
+}
+</script>
+
+</body>
+</html>
