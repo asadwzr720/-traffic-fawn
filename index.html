@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -451,7 +454,7 @@
       background: #1e293b;
     }
 
-    /* RESULT PAGE - Top margin increased so 3-line menu button stays above picture */
+    /* RESULT PAGE */
     .result-page {
       display: none;
       width: min(calc(100% - 24px), 640px);
@@ -764,109 +767,12 @@
 </main>
 
 <script>
-/* RECORDS DATA */
-const records = {
-  "UP664033011784": {
-    licence: "UP664033011784",
-    name: "Balaji Subramaniyan",
-    father: "Subramaniyan",
-    dateOfBirth: "17 March 1990",
-    firstIssue: "19 jun 2019",
-    issueRenewal: "19 jun 2019",
-    category: "Motor CYCLE+Motor CAR/JEEP ONLY",
-    expiry: "18 jun 2029"
-  },
-  "UP9081726354": {
-    licence: "UP9081726354",
-    name: "Aamir Shah",
-    father: "Naeem Shah",
-    dateOfBirth: "12 June 1994",
-    firstIssue: "20 August 2020",
-    issueRenewal: "20 August 2025",
-    category: "LMV / MCWG",
-    expiry: "19 August 2030"
-  },
-  "UP1831831833": {
-    licence: "UP1831831833",
-    name: "Arshad",
-    father: "Gul Raham",
-    dateOfBirth: "10 October 2001",
-    firstIssue: "11/2000",
-    issueRenewal: "11/2000",
-    category: "Car",
-    expiry: "26 August 2728"
-  },
-  "UP1831831834": {
-    licence: "UP1831831834",
-    name: "samood",
-    father: "Gul Raham",
-    dateOfBirth: "10 October 2001",
-    firstIssue: "11/2000",
-    issueRenewal: "11/2000",
-    category: "Car",
-    expiry: "26 August 2728"
-  },
-  "UP1831831835": {
-    licence: "UP1831831835",
-    name: "samood",
-    father: "Gul Raham",
-    dateOfBirth: "10 October 2001",
-    firstIssue: "11/2000",
-    issueRenewal: "11/2000",
-    category: "Car",
-    expiry: "26 August 2728"
-  },
-  "UP1831831838": {
-    licence: "UP1831831838",
-    name: "adil",
-    father: "adil Raham",
-    dateOfBirth: "10 October 2001",
-    firstIssue: "11/2000",
-    issueRenewal: "11/2000",
-    category: "Car",
-    expiry: "26 August 2728"
-  },
-  "UP1831831839": {
-    licence: "UP1831831839",
-    name: "zeeshan ullah",
-    father: "Zer Ali Khan",
-    dateOfBirth: "15 june 2006",
-    firstIssue: "11/2000",
-    issueRenewal: "11/2000",
-    category: "Car",
-    expiry: "26 August 2728"
-  },
-  "UP10676109287": {
-    licence: "UP10676109287",
-    name: "Harsh Kumar",
-    father: "Yamuna Dass",
-    dateOfBirth: "7 Octuber 1984",
-    firstIssue: "16/09/2018",
-    issueRenewal: "16/09/2018",
-    category: "Car",
-    expiry: "15 September 2028"
-  },
-  "UP10676109288": {
-    licence: "UP10676109288",
-    name: "Wajid Kumar",
-    father: "Noor Alam Kumar",
-    dateOfBirth: "7 Octuber 1984",
-    firstIssue: "16/09/2018",
-    issueRenewal: "16/09/2018",
-    category: "Car",
-    expiry: "15 September 2028"
-  },
-  "UP126981271680": {
-    licence: "UP126981271680",
-    name: "Shailendra Yadav",
-    father: "Ramlakshan Yadav",
-    dateOfBirth: "7 March 2000",
-    firstIssue: "15 may 2019",
-    issueRenewal: "15 may 2019",
-    category: "Motor Car + Motor Cycle/jeep only",
-    expiry: "14 may 2028"  
-  }
-};
+/* SUPABASE CONFIGURATION */
+const SUPABASE_URL = 'https://tiqtwepbpdxguhamjptw.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpcXR3ZXBicGR4Z3VoYW1qcHR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNzIxNTgsImV4cCI6MjEwODg0ODE1OH0.gYQjxT4_GmYuUK8PKpTvoonwwo_YvXLzEDvuU3v4yF4';
+
+const { createClient } = supabase;
+const _supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 /* ELEMENT SELECTORS */
 const menuBtn = document.getElementById("menuBtn");
@@ -921,17 +827,11 @@ loginLink.addEventListener("click", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-/* CLICK BANNER OR EMPTY SCREEN TO RETURN TO MAIN SCREEN */
+/* ONLY BANNER CLICKS RETURN TO HOME (Background clicks no longer wipe out results) */
 resultBanner.addEventListener("click", goToHomeScreen);
 
 loginPage.addEventListener("click", (event) => {
   if (event.target === loginPage) {
-    goToHomeScreen();
-  }
-});
-
-document.body.addEventListener("click", (event) => {
-  if (document.body.classList.contains("results-view") && event.target === document.body) {
     goToHomeScreen();
   }
 });
@@ -948,8 +848,8 @@ function cleanNumber(value) {
   return value.trim().replace(/[\s-]/g, "").toUpperCase();
 }
 
-/* SEARCH LOGIC */
-function searchLicence(value) {
+/* SEARCH LOGIC CONNECTED TO SUPABASE WITH ERROR HANDLING */
+async function searchLicence(value) {
   const key = cleanNumber(value);
   searchError.classList.remove("show");
 
@@ -959,45 +859,87 @@ function searchLicence(value) {
     return;
   }
 
-  const record = records[key];
-
-  if (!record) {
-    searchError.textContent = "Record not found.";
+  // Check if credentials are empty or client isn't initialized
+  if (!_supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    searchError.textContent = "Database not working, there is some problem with the database connection";
     searchError.classList.add("show");
     return;
   }
 
-  document.getElementById("licenceNumber").textContent = record.licence;
-  document.getElementById("recordName").textContent = record.name;
-  document.getElementById("fatherName").textContent = record.father;
-  document.getElementById("dateOfBirth").textContent = record.dateOfBirth;
-  document.getElementById("firstIssue").textContent = record.firstIssue;
-  document.getElementById("issueRenewal").textContent = record.issueRenewal;
-  document.getElementById("validUntil").textContent = record.expiry;
-  document.getElementById("category").textContent = record.category;
+  try {
+    // Fetch record from Supabase database table 'licenses'
+    const { data, error } = await _supabase
+      .from('licenses')
+      .select('*')
+      .eq('licence', key)
+      .maybeSingle();
 
-  resultInput.value = record.licence;
+    if (error) {
+      searchError.textContent = "Database not working, there is some problem with the database connection";
+      searchError.classList.add("show");
+      return;
+    }
 
-  document.body.classList.remove("login-view", "menu-open");
-  document.body.classList.add("results-view");
+    if (!data) {
+      searchError.textContent = "Record not found.";
+      searchError.classList.add("show");
+      return;
+    }
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    const record = data;
+
+    document.getElementById("licenceNumber").textContent = record.licence;
+    document.getElementById("recordName").textContent = record.name;
+    document.getElementById("fatherName").textContent = record.father;
+    document.getElementById("dateOfBirth").textContent = record.date_of_birth;
+    document.getElementById("firstIssue").textContent = record.first_issue;
+    document.getElementById("issueRenewal").textContent = record.issue_renewal;
+    document.getElementById("validUntil").textContent = record.expiry;
+    document.getElementById("category").textContent = record.category;
+
+    resultInput.value = record.licence;
+
+    document.body.classList.remove("login-view", "menu-open");
+    document.body.classList.add("results-view");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+  } catch (err) {
+    searchError.textContent = "Database not working, there is some problem with the database connection";
+    searchError.classList.add("show");
+  }
 }
 
 /* SEARCH HANDLERS */
 searchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+  event.preventDefault(); // Prevents page reload
   searchLicence(licenceInput.value);
 });
 
-resultSearchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+resultSearchForm.addEventListener("submit", async (event) => {
+  event.preventDefault(); // Prevents page reload
   const key = cleanNumber(resultInput.value);
-  if (!records[key]) {
-    alert("Record not found.");
+  
+  if (!_supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    alert("Database not working, there is some problem with the database connection");
     return;
   }
-  searchLicence(resultInput.value);
+
+  try {
+    const { data, error } = await _supabase
+      .from('licenses')
+      .select('*')
+      .eq('licence', key)
+      .maybeSingle();
+
+    if (error || !data) {
+      alert("Database not working, there is some problem with the database connection");
+      return;
+    }
+    searchLicence(resultInput.value);
+  } catch (err) {
+    alert("Database not working, there is some problem with the database connection");
+  }
 });
 
 /* URL PARAMETER */
