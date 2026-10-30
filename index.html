@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,8 @@
   <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -44,7 +46,7 @@
       font-family: var(--font-main);
       color: var(--color-dark-navy);
       background-color: #cde4de;
-      background-image: 
+      background-image:
         linear-gradient(rgba(215, 240, 233, 0.40), rgba(215, 240, 233, 0.40)),
         url("./green-texture.webp.jpeg");
       background-position: center center;
@@ -108,7 +110,7 @@
       background: #ffffff;
       transform: translateX(100%);
       transition: transform .28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -8px 0 25px rgba(0,0,0,.1);
+      box-shadow: -8px 0 25px rgba(0, 0, 0, .1);
     }
 
     body.menu-open .side-menu {
@@ -281,7 +283,7 @@
       height: 10px;
       background-color: #ffffff;
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     .features-bottom {
@@ -318,9 +320,17 @@
       height: 40px;
     }
 
-    .green { color: #16a34a; }
-    .red { color: #dc2626; }
-    .blue { color: #2563eb; }
+    .green {
+      color: #16a34a;
+    }
+
+    .red {
+      color: #dc2626;
+    }
+
+    .blue {
+      color: #2563eb;
+    }
 
     .search-error {
       display: none;
@@ -477,7 +487,7 @@
       height: auto;
       border-radius: 10px;
       margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
       cursor: pointer;
     }
 
@@ -488,7 +498,7 @@
       margin-bottom: 20px;
       border-radius: 9px;
       background: #ffffff;
-      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
     }
 
     .result-search input {
@@ -517,8 +527,13 @@
       overflow: hidden;
       border-radius: 10px;
       background: #ffffff;
-      box-shadow: 0 6px 16px rgba(0,0,0,.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .1);
       border: 1px solid #e2e8f0;
+    }
+
+    /* Hidden utility class to hide the table when record not found */
+    .result-card.hidden {
+      display: none !important;
     }
 
     .result-head {
@@ -561,395 +576,428 @@
     }
 
     @media (max-width: 480px) {
-      .hero h1 { font-size: 30px; }
-      .features-inline { font-size: 22px; gap: 14px; }
-      .features-inline span::before { width: 8px; height: 8px; }
-      .feature { font-size: 21px; }
-      .features-bottom { margin-top: 60px; }
-      .search input { font-size: 14px; padding: 0 14px; }
-      .result-page { margin-top: 68px; }
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .features-inline {
+        font-size: 22px;
+        gap: 14px;
+      }
+
+      .features-inline span::before {
+        width: 8px;
+        height: 8px;
+      }
+
+      .feature {
+        font-size: 21px;
+      }
+
+      .features-bottom {
+        margin-top: 60px;
+      }
+
+      .search input {
+        font-size: 14px;
+        padding: 0 14px;
+      }
+
+      .result-page {
+        margin-top: 68px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- MENU BUTTON -->
-<button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
-  ☰
-</button>
+  <!-- MENU BUTTON -->
+  <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+    ☰
+  </button>
 
-<div class="menu-overlay" id="menuOverlay"></div>
+  <div class="menu-overlay" id="menuOverlay"></div>
 
-<!-- SIDE MENU -->
-<aside class="side-menu" id="sideMenu">
-  <div class="menu-header">
-    <strong>Menu</strong>
-    <button type="button" class="close-menu" id="closeMenu">×</button>
-  </div>
+  <!-- SIDE MENU -->
+  <aside class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <strong>Menu</strong>
+      <button type="button" class="close-menu" id="closeMenu">×</button>
+    </div>
 
-  <div class="menu-line"></div>
+    <div class="menu-line"></div>
 
-  <nav class="side-links">
-    <a href="#home" id="homeLink">
-      <span class="menu-icon">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z"/>
-        </svg>
-      </span>
-      <span>Home</span>
-    </a>
+    <nav class="side-links">
+      <a href="#home" id="homeLink">
+        <span class="menu-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3 2.5 11h2.7v9h5v-5.5h3.6V20h5v-9h2.7L12 3Z" />
+          </svg>
+        </span>
+        <span>Home</span>
+      </a>
 
-    <a href="#login" id="loginLink">
-      <span class="menu-icon">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <circle cx="12" cy="7" r="4"/>
-          <path d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z"/>
-        </svg>
-      </span>
-      <span>Login</span>
-    </a>
-  </nav>
-</aside>
+      <a href="#login" id="loginLink">
+        <span class="menu-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M4.5 21v-2.5c0-4 3.2-6.5 7.5-6.5s7.5 2.5 7.5 6.5V21h-15Z" />
+          </svg>
+        </span>
+        <span>Login</span>
+      </a>
+    </nav>
+  </aside>
 
-<!-- HOME VIEW -->
-<main class="home" id="homePage">
-  <section class="hero">
-    <h1>
-      Welcome To Online<br>
-      Verification Services
-    </h1>
+  <!-- HOME VIEW -->
+  <main class="home" id="homePage">
+    <section class="hero">
+      <h1>
+        Welcome To Online<br>
+        Verification Services
+      </h1>
 
-    <!-- SEARCH -->
-    <form class="search" id="searchForm">
-      <input
-        id="licenceInput"
-        type="text"
-        inputmode="text"
-        autocomplete="off"
-        placeholder="Type DL/CNIC Number Without Dash"
-      >
+      <!-- SEARCH -->
+      <form class="search" id="searchForm">
+        <input id="licenceInput" type="text" inputmode="text" autocomplete="off"
+          placeholder="Type DL/CNIC Number Without Dash">
+        <button type="submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5" />
+            <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </button>
+      </form>
+
+      <div class="search-error" id="searchError"></div>
+
+      <div class="features-inline">
+        <span>Secure</span>
+        <span>Fast</span>
+        <span>Reliable</span>
+      </div>
+    </section>
+
+    <!-- BOTTOM FEATURES -->
+    <section class="features-bottom">
+      <div class="feature">
+        <span class="feature-icon green">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z" />
+          </svg>
+        </span>
+        <span class="feature-text">Digital Security</span>
+      </div>
+
+      <div class="feature">
+        <span class="feature-icon red">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="feature-text">24/7 Available</span>
+      </div>
+
+      <div class="feature">
+        <span class="feature-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3 12h18" />
+            <path d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21" />
+            <path d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9" />
+          </svg>
+        </span>
+        <span class="feature-text">Global Access</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- LOGIN PAGE VIEW -->
+  <main class="login-page" id="loginPage">
+    <section class="login-box">
+      <h2>Welcome Back Admin 👋</h2>
+
+      <form id="adminLoginForm">
+        <div class="login-field">
+          <label for="adminEmail">Email Address</label>
+          <input type="email" id="adminEmail" placeholder="Enter your email" autocomplete="email" required>
+        </div>
+
+        <div class="login-field">
+          <label for="adminPassword">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="adminPassword" placeholder="Enter your password" autocomplete="current-password"
+              required>
+            <button type="button" class="show-password" id="showPassword">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="admin-login-btn">Login</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- RESULT PAGE VIEW -->
+  <main class="result-page" id="resultPage">
+    <img src="./result-banner.jpg" class="result-banner" id="resultBanner" alt="Licence Verification"
+      title="Click to return to Home">
+
+    <form class="result-search" id="resultSearchForm">
+      <input id="resultInput" type="text" placeholder="Type DL/CNIC Number Without Dash">
       <button type="submit" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
-          <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5" />
+          <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
         </svg>
       </button>
     </form>
 
-    <div class="search-error" id="searchError"></div>
+    <div class="search-error" id="resultSearchError"></div>
 
-    <div class="features-inline">
-      <span>Secure</span>
-      <span>Fast</span>
-      <span>Reliable</span>
-    </div>
-  </section>
-
-  <!-- BOTTOM FEATURES -->
-  <section class="features-bottom">
-    <div class="feature">
-      <span class="feature-icon green">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2 4 5v6c0 5.2 3.4 9.7 8 11 4.6-1.3 8-5.8 8-11V5l-8-3Zm0 3.1 5 1.9v4c0 3.8-2.3 7.2-5 8.4V5.1Z"/>
-        </svg>
-      </span>
-      <span class="feature-text">Digital Security</span>
-    </div>
-
-    <div class="feature">
-      <span class="feature-icon red">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 6v6l4 2" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span class="feature-text">24/7 Available</span>
-    </div>
-
-    <div class="feature">
-      <span class="feature-icon blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M3 12h18"/>
-          <path d="M12 3c2.3 2.4 3.5 5.4 3.5 9S14.3 18.6 12 21"/>
-          <path d="M12 3C9.7 5.4 8.5 8.4 8.5 12s1.2 6.6 3.5 9"/>
-        </svg>
-      </span>
-      <span class="feature-text">Global Access</span>
-    </div>
-  </section>
-</main>
-
-<!-- LOGIN PAGE VIEW -->
-<main class="login-page" id="loginPage">
-  <section class="login-box">
-    <h2>Welcome Back Admin 👋</h2>
-
-    <form id="adminLoginForm">
-      <div class="login-field">
-        <label for="adminEmail">Email Address</label>
-        <input type="email" id="adminEmail" placeholder="Enter your email" autocomplete="email" required>
+    <article class="result-card" id="resultCard">
+      <div class="result-head">
+        License Number: <span id="licenceNumber"></span>
       </div>
 
-      <div class="login-field">
-        <label for="adminPassword">Password</label>
-        <div class="password-wrap">
-          <input type="password" id="adminPassword" placeholder="Enter your password" autocomplete="current-password" required>
-          <button type="button" class="show-password" id="showPassword">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6Z" stroke="currentColor" stroke-width="2"/>
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </button>
-        </div>
+      <div class="detail">
+        <label>Name</label>
+        <strong id="recordName"></strong>
       </div>
 
-      <button type="submit" class="admin-login-btn">Login</button>
-    </form>
-  </section>
-</main>
+      <div class="detail">
+        <label>Father name</label>
+        <strong id="fatherName"></strong>
+      </div>
 
-<!-- RESULT PAGE VIEW -->
-<main class="result-page" id="resultPage">
-  <img src="./result-banner.jpg" class="result-banner" id="resultBanner" alt="Licence Verification" title="Click to return to Home">
+      <div class="detail">
+        <label>Date of Birth</label>
+        <strong id="dateOfBirth"></strong>
+      </div>
 
-  <form class="result-search" id="resultSearchForm">
-    <input id="resultInput" type="text" placeholder="Type DL/CNIC Number Without Dash">
-    <button type="submit" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none">
-        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
-        <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </form>
+      <div class="detail">
+        <label>First Issue</label>
+        <strong id="firstIssue"></strong>
+      </div>
 
-  <article class="result-card">
-    <div class="result-head">
-      License Number: <span id="licenceNumber"></span>
-    </div>
+      <div class="detail">
+        <label>Issue / Renewal</label>
+        <strong id="issueRenewal"></strong>
+      </div>
 
-    <div class="detail">
-      <label>Name</label>
-      <strong id="recordName"></strong>
-    </div>
+      <div class="detail">
+        <label>Validity</label>
+        <strong id="validUntil"></strong>
+      </div>
 
-    <div class="detail">
-      <label>Father name</label>
-      <strong id="fatherName"></strong>
-    </div>
+      <div class="detail">
+        <label>Category</label>
+        <strong id="category"></strong>
+      </div>
+    </article>
+  </main>
 
-    <div class="detail">
-      <label>Date of Birth</label>
-      <strong id="dateOfBirth"></strong>
-    </div>
-
-    <div class="detail">
-      <label>First Issue</label>
-      <strong id="firstIssue"></strong>
-    </div>
-
-    <div class="detail">
-      <label>Issue / Renewal</label>
-      <strong id="issueRenewal"></strong>
-    </div>
-
-    <div class="detail">
-      <label>Validity</label>
-      <strong id="validUntil"></strong>
-    </div>
-
-    <div class="detail">
-      <label>Category</label>
-      <strong id="category"></strong>
-    </div>
-  </article>
-</main>
-
-<script>
-/* SUPABASE CONFIGURATION */
-const SUPABASE_URL = 'https://tiqtwepbpdxguhamjptw.supabase.co';
+  <script>
+    /* SUPABASE CONFIGURATION */
+    const SUPABASE_URL = 'https://tiqtwepbpdxguhamjptw.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpcXR3ZXBicGR4Z3VoYW1qcHR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNzIxNTgsImV4cCI6MjEwODg0ODE1OH0.gYQjxT4_GmYuUK8PKpTvoonwwo_YvXLzEDvuU3v4yF4';
 
-const { createClient } = supabase;
-const _supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+    const { createClient } = supabase;
+    const _supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-/* ELEMENT SELECTORS */
-const menuBtn = document.getElementById("menuBtn");
-const closeMenu = document.getElementById("closeMenu");
-const menuOverlay = document.getElementById("menuOverlay");
-const homeLink = document.getElementById("homeLink");
-const loginLink = document.getElementById("loginLink");
-const searchForm = document.getElementById("searchForm");
-const licenceInput = document.getElementById("licenceInput");
-const searchError = document.getElementById("searchError");
-const resultSearchForm = document.getElementById("resultSearchForm");
-const resultInput = document.getElementById("resultInput");
-const resultBanner = document.getElementById("resultBanner");
-const loginPage = document.getElementById("loginPage");
-const adminPassword = document.getElementById("adminPassword");
-const showPassword = document.getElementById("showPassword");
-const adminLoginForm = document.getElementById("adminLoginForm");
+    /* ELEMENT SELECTORS */
+    const menuBtn = document.getElementById("menuBtn");
+    const closeMenu = document.getElementById("closeMenu");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const homeLink = document.getElementById("homeLink");
+    const loginLink = document.getElementById("loginLink");
+    const searchForm = document.getElementById("searchForm");
+    const licenceInput = document.getElementById("licenceInput");
+    const searchError = document.getElementById("searchError");
+    const resultSearchForm = document.getElementById("resultSearchForm");
+    const resultInput = document.getElementById("resultInput");
+    const resultSearchError = document.getElementById("resultSearchError");
+    const resultCard = document.getElementById("resultCard");
+    const resultBanner = document.getElementById("resultBanner");
+    const loginPage = document.getElementById("loginPage");
+    const adminPassword = document.getElementById("adminPassword");
+    const showPassword = document.getElementById("showPassword");
+    const adminLoginForm = document.getElementById("adminLoginForm");
 
-/* Auto remove dashes */
-licenceInput.addEventListener('input', function() {
-  this.value = this.value.replace(/-/g, '');
-});
+    /* Auto remove dashes */
+    licenceInput.addEventListener('input', function () {
+      this.value = this.value.replace(/-/g, '');
+    });
 
-resultInput.addEventListener('input', function() {
-  this.value = this.value.replace(/-/g, '');
-});
+    resultInput.addEventListener('input', function () {
+      this.value = this.value.replace(/-/g, '');
+    });
 
-/* FUNCTION TO GO BACK TO MAIN HOME SCREEN */
-function goToHomeScreen(event) {
-  if (event) event.preventDefault();
-  document.body.classList.remove("menu-open", "login-view", "results-view");
-  searchError.classList.remove("show");
-  licenceInput.value = "";
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-/* MENU EVENTS */
-menuBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  document.body.classList.add("menu-open");
-});
-closeMenu.addEventListener("click", () => document.body.classList.remove("menu-open"));
-menuOverlay.addEventListener("click", () => document.body.classList.remove("menu-open"));
-
-/* NAVIGATION */
-homeLink.addEventListener("click", goToHomeScreen);
-
-loginLink.addEventListener("click", (event) => {
-  event.preventDefault();
-  document.body.classList.remove("menu-open", "results-view");
-  document.body.classList.add("login-view");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* ONLY BANNER CLICKS RETURN TO HOME (Background clicks no longer wipe out results) */
-resultBanner.addEventListener("click", goToHomeScreen);
-
-loginPage.addEventListener("click", (event) => {
-  if (event.target === loginPage) {
-    goToHomeScreen();
-  }
-});
-
-/* PASSWORD TOGGLE */
-showPassword.addEventListener("click", () => {
-  adminPassword.type = adminPassword.type === "password" ? "text" : "password";
-});
-
-adminLoginForm.addEventListener("submit", (e) => e.preventDefault());
-
-/* UTILITY */
-function cleanNumber(value) {
-  return value.trim().replace(/[\s-]/g, "").toUpperCase();
-}
-
-/* SEARCH LOGIC CONNECTED TO SUPABASE WITH ERROR HANDLING */
-async function searchLicence(value) {
-  const key = cleanNumber(value);
-  searchError.classList.remove("show");
-
-  if (!key) {
-    searchError.textContent = "Please enter a licence or CNIC number.";
-    searchError.classList.add("show");
-    return;
-  }
-
-  // Check if credentials are empty or client isn't initialized
-  if (!_supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    searchError.textContent = "Database not working, there is some problem with the database connection";
-    searchError.classList.add("show");
-    return;
-  }
-
-  try {
-    // Fetch record from Supabase database table 'licenses'
-    const { data, error } = await _supabase
-      .from('licenses')
-      .select('*')
-      .eq('licence', key)
-      .maybeSingle();
-
-    if (error) {
-      searchError.textContent = "Database not working, there is some problem with the database connection";
-      searchError.classList.add("show");
-      return;
+    /* FUNCTION TO GO BACK TO MAIN HOME SCREEN */
+    function goToHomeScreen(event) {
+      if (event) event.preventDefault();
+      document.body.classList.remove("menu-open", "login-view", "results-view");
+      searchError.classList.remove("show");
+      resultSearchError.classList.remove("show");
+      resultCard.classList.remove("hidden");
+      licenceInput.value = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    if (!data) {
-      searchError.textContent = "Record not found.";
-      searchError.classList.add("show");
-      return;
+    /* MENU EVENTS */
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      document.body.classList.add("menu-open");
+    });
+    closeMenu.addEventListener("click", () => document.body.classList.remove("menu-open"));
+    menuOverlay.addEventListener("click", () => document.body.classList.remove("menu-open"));
+
+    /* NAVIGATION */
+    homeLink.addEventListener("click", goToHomeScreen);
+
+    loginLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      document.body.classList.remove("menu-open", "results-view");
+      document.body.classList.add("login-view");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    /* BANNER CLICK RETURNS TO HOME */
+    resultBanner.addEventListener("click", goToHomeScreen);
+
+    loginPage.addEventListener("click", (event) => {
+      if (event.target === loginPage) {
+        goToHomeScreen();
+      }
+    });
+
+    /* PASSWORD TOGGLE */
+    showPassword.addEventListener("click", () => {
+      adminPassword.type = adminPassword.type === "password" ? "text" : "password";
+    });
+
+    adminLoginForm.addEventListener("submit", (e) => e.preventDefault());
+
+    /* UTILITY */
+    function cleanNumber(value) {
+      return value.trim().replace(/[\s-]/g, "");
     }
 
-    const record = data;
+    /* SEARCH LOGIC WITH LOADING, TIMEOUT, AND HIDING RESULT CARD ON ERROR */
+    async function searchLicence(value) {
+      const key = cleanNumber(value);
+      const isResultsView = document.body.classList.contains("results-view");
+      const activeErrorEl = isResultsView ? resultSearchError : searchError;
 
-    document.getElementById("licenceNumber").textContent = record.licence;
-    document.getElementById("recordName").textContent = record.name;
-    document.getElementById("fatherName").textContent = record.father;
-    document.getElementById("dateOfBirth").textContent = record.date_of_birth;
-    document.getElementById("firstIssue").textContent = record.first_issue;
-    document.getElementById("issueRenewal").textContent = record.issue_renewal;
-    document.getElementById("validUntil").textContent = record.expiry;
-    document.getElementById("category").textContent = record.category;
+      activeErrorEl.classList.remove("show");
 
-    resultInput.value = record.licence;
+      if (!key) {
+        activeErrorEl.textContent = "Please enter a licence or CNIC number.";
+        activeErrorEl.classList.add("show");
+        return;
+      }
 
-    document.body.classList.remove("login-view", "menu-open");
-    document.body.classList.add("results-view");
+      if (!_supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        activeErrorEl.textContent = "Database not working, there is some problem with the database connection";
+        activeErrorEl.classList.add("show");
+        if (isResultsView) resultCard.classList.add("hidden");
+        return;
+      }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+      // Show loading message instantly
+      activeErrorEl.textContent = "Checking...";
+      activeErrorEl.classList.add("show");
 
-  } catch (err) {
-    searchError.textContent = "Database not working, there is some problem with the database connection";
-    searchError.classList.add("show");
-  }
-}
+      try {
+        // 7-second timeout check for slow internet
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('SLOW_INTERNET')), 7000)
+        );
 
-/* SEARCH HANDLERS */
-searchForm.addEventListener("submit", (event) => {
-  event.preventDefault(); // Prevents page reload
-  searchLicence(licenceInput.value);
-});
+        const queryPromise = _supabase
+          .from('licenses')
+          .select('*')
+          .ilike('licence', key)
+          .maybeSingle();
 
-resultSearchForm.addEventListener("submit", async (event) => {
-  event.preventDefault(); // Prevents page reload
-  const key = cleanNumber(resultInput.value);
-  
-  if (!_supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    alert("Database not working, there is some problem with the database connection");
-    return;
-  }
+        const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
 
-  try {
-    const { data, error } = await _supabase
-      .from('licenses')
-      .select('*')
-      .eq('licence', key)
-      .maybeSingle();
+        if (error) {
+          activeErrorEl.textContent = "Database not working, there is some problem with the database connection";
+          activeErrorEl.classList.add("show");
+          if (isResultsView) resultCard.classList.add("hidden");
+          return;
+        }
 
-    if (error || !data) {
-      alert("Database not working, there is some problem with the database connection");
-      return;
+        // If record not found, show error and hide the result card table
+        if (!data) {
+          activeErrorEl.textContent = "Record not found.";
+          activeErrorEl.classList.add("show");
+          if (isResultsView) resultCard.classList.add("hidden");
+          return;
+        }
+
+        const record = data;
+
+        document.getElementById("licenceNumber").textContent = record.licence;
+        document.getElementById("recordName").textContent = record.name;
+        document.getElementById("fatherName").textContent = record.father;
+        document.getElementById("dateOfBirth").textContent = record.date_of_birth;
+        document.getElementById("firstIssue").textContent = record.first_issue;
+        document.getElementById("issueRenewal").textContent = record.issue_renewal;
+        document.getElementById("validUntil").textContent = record.expiry;
+        document.getElementById("category").textContent = record.category;
+
+        resultInput.value = record.licence;
+        
+        // Show result card and clear errors on successful find
+        resultCard.classList.remove("hidden");
+        searchError.classList.remove("show");
+        resultSearchError.classList.remove("show");
+
+        document.body.classList.remove("login-view", "menu-open");
+        document.body.classList.add("results-view");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      } catch (err) {
+        if (err.message === 'SLOW_INTERNET') {
+          activeErrorEl.textContent = "Internet is slow, please check your connection.";
+        } else {
+          activeErrorEl.textContent = "Database not working, there is some problem with the database connection";
+        }
+        activeErrorEl.classList.add("show");
+        if (isResultsView) resultCard.classList.add("hidden");
+      }
     }
-    searchLicence(resultInput.value);
-  } catch (err) {
-    alert("Database not working, there is some problem with the database connection");
-  }
-});
 
-/* URL PARAMETER */
-const fromUrl = new URLSearchParams(window.location.search).get("licence");
-if (fromUrl) {
-  licenceInput.value = fromUrl;
-  searchLicence(fromUrl);
-  history.replaceState(null, "", window.location.pathname);
-}
-</script>
+    /* SEARCH HANDLERS */
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      searchLicence(licenceInput.value);
+    });
+
+    resultSearchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      searchLicence(resultInput.value);
+    });
+
+    /* URL PARAMETER */
+    const fromUrl = new URLSearchParams(window.location.search).get("licence");
+    if (fromUrl) {
+      licenceInput.value = fromUrl;
+      searchLicence(fromUrl);
+      history.replaceState(null, "", window.location.pathname);
+    }
+  </script>
 
 </body>
+
 </html>
